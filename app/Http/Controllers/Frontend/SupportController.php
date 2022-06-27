@@ -37,8 +37,7 @@ class SupportController extends Controller
                 ['name' => $name, 'email' =>  $email, 'comment' =>  $msg],
                 function ($message) use ($name, $email) {
                     $message->from('anirbanshow@kreativemachinez.net');
-                    $message->to($email, $name)
-                        ->subject('Your Website Contact Form');
+                    $message->to($email, $name)->subject('Your Website Contact Form');
                 }
             );
 
