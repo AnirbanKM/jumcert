@@ -1,0 +1,53 @@
+#recorded_video {
+    border: 2px solid red;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    max-width: 300px;
+    height: 150px;
+}
+
+.btn_group {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    gap: 14px;
+}
+
+.btn_group button {
+    margin: 0 5px;
+}
+
+a#aTag {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.video_feedback {
+    border: 2px solid rgb(0, 255, 13);
+}
+
+.hidden {
+    display: none;
+}
+
+
+.btn_group button {
+    width: 105px;
+}
+
+a#aTag {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    background: #ff7f11;
+    width: 128px;
+    margin: auto;
+    margin-top: 10px;
+    padding: 11px 0;
+    margin-top: 22px;
+    margin-bottom: 13px;
+    border-radius: 5px;
+    color: #fff;
+}

@@ -1,0 +1,10 @@
+Normal user->
+user@gmail.com
+1234
+
+Business user->
+king@gmail.com
+Pa$$w0rd!
+
+Project link->
+https://www.jumcert.com/jum/

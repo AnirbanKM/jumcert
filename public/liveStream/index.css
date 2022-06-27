@@ -1,0 +1,117 @@
+.banner {
+    padding: 0;
+    background-color: #52575c;
+    color: white;
+}
+
+.banner-text {
+    padding: 8px 20px;
+    margin: 0;
+}
+
+
+#join-form {
+    margin-top: 10px;
+    position: relative;
+}
+
+.tips {
+    font-size: 12px;
+    margin-bottom: 2px;
+    color: gray;
+}
+
+.join-info-text {
+    margin-bottom: 2px;
+}
+
+input {
+    width: 100%;
+    margin-bottom: 2px;
+}
+
+video {
+    object-fit: cover !important;
+}
+
+.player {
+    max-width: 100%;
+    height: 500px;
+}
+
+.player-name {
+    margin: 8px 0;
+    display: none;
+}
+
+.button-group {
+    position: absolute;
+    z-index: 9;
+    left: 50%;
+    top: 200px !important;
+    transform: translate(-50%, -50%);
+}
+
+.row.video-group {
+    padding: 30px 40px;
+}
+
+button#leave {
+    display: none;
+}
+
+#success-alert,
+#success-alert-with-token {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .player {
+        width: 320px;
+        height: 240px;
+    }
+}
+
+button#host-join {
+    padding: 12px 22px;
+}
+
+
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.85);
+    -webkit-backdrop-filter: saturate(180%) blur(10px);
+    backdrop-filter: saturate(180%) blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999999999;
+}
+
+.preloader img {
+    animation: App_logo_spin infinite 2s linear;
+}
+
+@keyframes App_logo_spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+.leave_btn {
+    top: 480px !important;
+    bottom: -35px;
+}
