@@ -54,40 +54,55 @@
                         </div>
                     </div>
 
-                    <div class="row right-support-section2">
-                        <div class="col-md-6">
-                            <img src="{{ asset('frontend/img/sendusmsg.png') }}" alt="">
-                        </div>
-                        <div class="col-md-6">
-                            <h2>Send us message</h2>
-                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have
-                                suffered alteration in some form, by injected humour.</p>
+                    @auth
+                        <div class="row right-support-section2">
+                            <div class="col-md-6">
+                                <img src="{{ asset('frontend/img/sendusmsg.png') }}" alt="">
+                            </div>
+                            <div class="col-md-6">
+                                <h2>Send us message</h2>
+                                <p>There are many variations of passages of Lorem Ipsum available, but the majority have
+                                    suffered alteration in some form, by injected humour.
+                                </p>
 
-                            <form action="" method="POST">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <input type="text" placeholder="Name">
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
                                     </div>
-                                    <div class="col-md-6">
-                                        <input type="text" placeholder="Email">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" placeholder="Phone">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" placeholder="Country">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <textarea placeholder="Message"></textarea>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <input type="submit" value="SEND">
-                                    </div>
-                                </div>
-                            </form>
+                                @endif
 
+                                <form action="{{ route('store_msg') }}" method="POST">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text" placeholder="Name" name="name" />
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" placeholder="Email" name="email" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" placeholder="Phone" name="phone">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" placeholder="Country" name="country">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <textarea placeholder="Message" name="msg"></textarea>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <input type="submit" value="SEND" />
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
                         </div>
-                    </div>
+                    @endauth
 
                 </div>
             </div>

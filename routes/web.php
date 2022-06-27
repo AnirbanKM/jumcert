@@ -166,6 +166,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/stream_record_ins', [StreamRecorderController::class, 'streamRecordIns'])->name('stream_record_ins');
     Route::get('/fetch_stream_videos', [StreamRecorderController::class, 'fetchStreamVideos'])->name('fetch_stream_videos');
     Route::get('/watch_stream/{recorded_stream_id}', [StreamRecorderController::class, 'watchStream'])->name('watch_stream');
+
+    // ***Create msg and store
+    Route::post('/store_msg', [SupportController::class, 'create'])->name('store_msg');
 });
 
 // Free Plan Routes for users
