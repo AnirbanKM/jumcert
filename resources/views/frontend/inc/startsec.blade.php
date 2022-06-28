@@ -1,4 +1,4 @@
-<section class="start_sec">
+<section class="start_sec d-none">
     <div class="container">
         <h4>Start for your first 7 days</h4>
         <p>
