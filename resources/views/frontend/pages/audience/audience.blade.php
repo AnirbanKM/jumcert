@@ -22,20 +22,6 @@
         </div>
     </div>
 
-    <!-- Record Screen -->
-    <div class="record_area">
-        <video id="recorded_video" autoplay loop controls muted></video>
-
-        <div class="btn_group">
-            <button id="startBtn" class="btn btn-primary">Start</button>
-            <button id="stopBtn" class="btn btn-info">Stop</button>
-        </div>
-
-        <a href="javascript:;" id="aTag">
-            Download video
-        </a>
-    </div>
-
     <script src="{{ asset('liveStream') }}/jquery-3.4.1.min.js"></script>
     <script src="{{ asset('liveStream') }}/bootstrap.bundle.min.js"></script>
     <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
@@ -59,7 +45,6 @@
     <script src="{{ asset('liveStream') }}/basicLive.js"></script>
 
     <script>
-
         $("button#audience-join").click(function() {
             setTimeout(function() {
                 getResource();
@@ -69,7 +54,7 @@
         function getResource() {
             var cname = localStorage.getItem("cname");
             var uid = localStorage.getItem("uid");
-           
+
             $.ajax({
                 url: "{{ route('get_resource') }}",
                 type: 'GET',
@@ -82,11 +67,11 @@
                     // console.log(resp);
                     var respId = resp.masterID;
                     recordStartFun(respId, cname, uid);
-                }    
-            });   
+                }
+            });
         }
 
-        function recordStartFun(resourceId,channelSlug,userIdParam) {
+        function recordStartFun(resourceId, channelSlug, userIdParam) {
 
             var id = resourceId;
             var appID = "73360382719943c6a12d1602e673eb8f";
@@ -96,40 +81,40 @@
                 'Basic NzZmNGJkMDkxN2E2NDVmMWFhMzA4ODQ3YjEyZjc0Y2M6MWJmYTgxOGJhYjkwNGZjNjg0NjcwNjk5NzY3ZmRkMjg=';
 
             var bodyObj = {
-                    "cname": channelSlug.toString(),
-                    "uid": userIdParam.toString(),
-                    "clientRequest": {
-                        "recordingConfig": {
-                            "streamTypes": 2,
+                "cname": channelSlug.toString(),
+                "uid": userIdParam.toString(),
+                "clientRequest": {
+                    "recordingConfig": {
+                        "streamTypes": 2,
 
-                            "channelType": 1,
-                            "videoStreamType": 0,
-                        },
-                        "recordingFileConfig": {
-                          "avFileType": [
+                        "channelType": 1,
+                        "videoStreamType": 0,
+                    },
+                    "recordingFileConfig": {
+                        "avFileType": [
                             "hls",
                             "mp4"
-                          ]
-                        },
-                        "recordingConfig": {
-                            "transcodingConfig": {
-                                "height": 500,
-                                "width": 1200,
-                                "bitrate": 500,
-                                "fps": 15,
-                                "mixedVideoLayout": 1,
-                                "backgroundColor": "#FF0000"
-                            }
-                        },
-                        "storageConfig": {
-                            "vendor": 1,
-                            "region": 0,
-                            "bucket": "jumcertstorage",
-                            "accessKey": "AKIA3IE3MMFQ37HUMCBV",
-                            "secretKey": "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",
-                            "fileNamePrefix": ["jumcert"]
+                        ]
+                    },
+                    "recordingConfig": {
+                        "transcodingConfig": {
+                            "height": 500,
+                            "width": 1200,
+                            "bitrate": 500,
+                            "fps": 15,
+                            "mixedVideoLayout": 1,
+                            "backgroundColor": "#FF0000"
                         }
+                    },
+                    "storageConfig": {
+                        "vendor": 1,
+                        "region": 0,
+                        "bucket": "jumcertstorage",
+                        "accessKey": "AKIA3IE3MMFQ37HUMCBV",
+                        "secretKey": "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",
+                        "fileNamePrefix": ["jumcert"]
                     }
+                }
             }
 
             $.ajax({
@@ -162,7 +147,6 @@
 
         $("#leave").click(function() {
             alert("stopRecordingFun");
-            stopRecordingFun();
         });
 
         // Stop record function
@@ -174,7 +158,8 @@
             var resourceid = localStorage.getItem("resourceid");
             var sid = localStorage.getItem("sid");
 
-            var stopUrl = "https://api.agora.io/v1/apps/"+appid+"/cloud_recording/resourceid/"+resourceid+"/sid/"+sid+"/mode/mix/stop";
+            var stopUrl = "https://api.agora.io/v1/apps/" + appid + "/cloud_recording/resourceid/" + resourceid + "/sid/" +
+                sid + "/mode/mix/stop";
 
             var authorizationField =
                 'Basic NzZmNGJkMDkxN2E2NDVmMWFhMzA4ODQ3YjEyZjc0Y2M6MWJmYTgxOGJhYjkwNGZjNjg0NjcwNjk5NzY3ZmRkMjg=';
@@ -220,7 +205,7 @@
                     success: function(resp) {
                         console.log("success on create record on db");
                         console.log(resp);
-                        if(resp.status==200) {
+                        if (resp.status == 200) {
                             setTimeout(function() {
                                 window.location = "{{ route('fetch_stream_videos') }}";
                             }, 3000);
@@ -233,10 +218,5 @@
                 });
             }
         }
-            
     </script>
-
-    <script src="{{ asset('record') }}/record.js"></script>
-        
-
 @endsection
