@@ -73,6 +73,7 @@ class StreamRecorderController extends Controller
         $stream_videos = StreamRecorder::where('channel_owner_id', $user_id)
             ->orWhere('buyer_id', $user_id)
             ->with('streamInfo')
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('frontend.pages.recording.streamed_vidoes', ['streamVideos' => $stream_videos]);
@@ -82,7 +83,7 @@ class StreamRecorderController extends Controller
     {
         $id = $recorded_stream_id;
 
-        
+
 
         $recordedStreamObj = StreamRecorder::where('id', $id)
             ->with('streamInfo', 'channerOwnerInfo')
