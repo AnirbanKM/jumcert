@@ -18,7 +18,6 @@
         font-weight: 500;
         color: rgb(233, 71, 71);
     }
-
 </style>
 
 @section('content')

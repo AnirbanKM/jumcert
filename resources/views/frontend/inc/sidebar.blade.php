@@ -1,6 +1,6 @@
 <div class="sidebar">
 
-    @foreach ($categories as $category)
+    @foreach ($cats as $category)
         @php
             if (request()->segment(3) == $category->category->name) {
                 $x = 'active';

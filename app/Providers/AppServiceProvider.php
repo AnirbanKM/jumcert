@@ -29,8 +29,8 @@ class AppServiceProvider extends ServiceProvider
         // $categories = Category::take(4)->get();
         // view()->share('categories', $categories);
 
-        $categories = VideoUpload::with('category')->get()->unique('category_id')->take(4);
-        view()->share('categories', $categories);
+        $cats = VideoUpload::with('category')->get()->unique('category_id')->take(4);
+        view()->share('cats', $cats);
 
         Paginator::useBootstrap();
     }
