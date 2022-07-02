@@ -27,9 +27,9 @@ class ChatController extends Controller
         $senderID = auth()->user()->id; // Sender Id
 
         //Check if already chat request exist
-
-        $check = Chat::where('sender_id', $senderID)
-            ->where('receiver_id', $ownerID)->where('status', 'Active')->get();
+        $check = Chat::where('sender_id', $senderID)->where('receiver_id', $ownerID)
+            ->where('status', 'Active')->orWhere('status', 'Inactive')
+            ->get();
 
         if (count($check) > 0) {
             echo json_encode([
