@@ -65,7 +65,6 @@
                                                     <th>Playlist Category</th>
                                                     <th>Image</th>
                                                     <th>Update</th>
-                                                    <th>Delete</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -83,7 +82,6 @@
                                                                 Update
                                                             </button>
                                                         </td>
-                                                        <td> <button class="btn btn-danger">Delete</button> </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
