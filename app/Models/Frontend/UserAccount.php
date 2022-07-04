@@ -2,6 +2,7 @@
 
 namespace App\Models\Frontend;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -31,4 +32,9 @@ class UserAccount extends Model
         'type',
         'used'
     ];
+
+    public function account()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

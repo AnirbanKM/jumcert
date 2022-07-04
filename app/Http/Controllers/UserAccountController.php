@@ -11,7 +11,7 @@ class UserAccountController extends Controller
     public function index()
     {
         $uid = auth()->user()->id;
-        $query = UserAccount::where('user_id', $uid)->get();
+        $query = UserAccount::where('user_id', $uid)->with('account')->get();
         return view('frontend.pages.account.index', ['data' => $query]);
     }
 

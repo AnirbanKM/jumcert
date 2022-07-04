@@ -14,7 +14,17 @@
                     <div class="row right-homepage-section1">
                         <div class="col-md-12">
                             <div class="heading">
-                                <h2>Stripe Payment Info</h2>
+                                <h2>Stripe Payment Info
+                                    @if (count($data) > 0)
+                                        <span class="badge badge-success" style="font-size: 12px; font-weight: 700;">
+                                            Your account is created.
+                                        </span>
+                                    @else
+                                        <span class="badge badge-danger" style="font-size: 12px; font-weight: 700;">
+                                            Your need to create your account your account.
+                                        </span>
+                                    @endif
+                                </h2>
                             </div>
 
                             @if (count($data) > 0)
@@ -46,8 +56,7 @@
                                             <div class="form-group">
                                                 <label for="accountholdername">Account holder name</label>
                                                 <input type="text" placeholder="Account holder name" class="form-control"
-                                                    class="mb-0" name="account_holder_name"
-                                                    id="accountholdername">
+                                                    class="mb-0" name="account_holder_name" id="accountholdername">
                                                 @error('account_holder_name')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -57,8 +66,7 @@
                                             <div class="form-group">
                                                 <label for="accountholdertype">Account holder type</label>
                                                 <input type="text" placeholder="Account holder name" class="form-control"
-                                                    class="mb-0" name="account_holder_type"
-                                                    id="accountholdertype">
+                                                    class="mb-0" name="account_holder_type" id="accountholdertype">
                                                 @error('account_holder_type')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
