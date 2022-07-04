@@ -183,18 +183,18 @@
                         dataType: "json",
                         success: function(resp) {
                             console.log(resp);
-                            // if (resp.errors) {
-                            //     $("#smallModal").hide();
-                            //     $(".modal-backdrop").remove();
-                            //     notification(resp.errors, "error");
-                            //     setTimeout(function() {
-                            //         location.reload();
-                            //     }, 2000);
-                            // } else {
-                            //     console.log(resp);
-                            //     window.location.href = "{{ route('home') }}";
-                            //     notification(resp.success, "success");
-                            // }
+                            if (resp.errors) {
+                                $("#smallModal").hide();
+                                $(".modal-backdrop").remove();
+                                notification(resp.errors, "error");
+                                setTimeout(function() {
+                                    location.reload();
+                                }, 2000);
+                            } else {
+                                console.log(resp);
+                                window.location.href = "{{ route('home') }}";
+                                notification(resp.success, "success");
+                            }
                         }
                     });
                 }
