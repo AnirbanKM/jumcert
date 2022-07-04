@@ -43,7 +43,6 @@
         form input[type="submit"] {
             border: none;
         }
-
     </style>
 @endsection
 
@@ -59,48 +58,52 @@
                 <div class="col-lg-9">
                     <div class="row right-homepage-section1">
 
-                        @foreach ($chatRequests as $item)
-                            <div class="col-xl-4 col-md-6">
-                                <div class="each_card req-card">
-                                    <div class="top">
-                                        <h3>
-                                            @if ($item->userProfile == null)
-                                                <img src="{{ asset('frontend/img/user.png') }}" class="user"
-                                                    alt="" />
-                                            @else
-                                                <img src="{{ $item->userProfile->image }}" class="user"
-                                                    alt="" />
-                                            @endif
+                        @if (count($chatRequests) > 0)
+                            @foreach ($chatRequests as $item)
+                                <div class="col-xl-4 col-md-6">
+                                    <div class="each_card req-card">
+                                        <div class="top">
+                                            <h3>
+                                                @if ($item->userProfile == null)
+                                                    <img src="{{ asset('frontend/img/user.png') }}" class="user"
+                                                        alt="" />
+                                                @else
+                                                    <img src="{{ $item->userProfile->image }}" class="user"
+                                                        alt="" />
+                                                @endif
 
-                                            {{ $item->userinfo->name }}
-                                            <span> {{ $item->created_at->diffForHumans() }}</span>
-                                        </h3>
-                                    </div>
-                                    <div class="request-part">
-                                        <h3>You have a chat request :</h3>
-                                        <ul>
-                                            <li>
-                                                <form action="{{ route('update_chat_req') }}" method="post">
-                                                    @csrf
-                                                    <input type="hidden" name="cid" value="{{ $item->id }}" />
-                                                    <input type="hidden" name="status" value="Active" />
-                                                    <input type="submit" class="accept" value="Accept">
-                                                </form>
+                                                {{ $item->userinfo->name }}
+                                                <span> {{ $item->created_at->diffForHumans() }}</span>
+                                            </h3>
+                                        </div>
+                                        <div class="request-part">
+                                            <h3>You have a chat request :</h3>
+                                            <ul>
+                                                <li>
+                                                    <form action="{{ route('update_chat_req') }}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="cid" value="{{ $item->id }}" />
+                                                        <input type="hidden" name="status" value="Active" />
+                                                        <input type="submit" class="accept" value="Accept">
+                                                    </form>
 
-                                            </li>
-                                            <li>
-                                                <form action="{{ route('update_chat_req') }}" method="post">
-                                                    @csrf
-                                                    <input type="hidden" name="cid" value="{{ $item->id }}" />
-                                                    <input type="hidden" name="status" value="Inactive" />
-                                                    <input type="submit" class="reject" value="Reject">
-                                                </form>
-                                            </li>
-                                        </ul>
+                                                </li>
+                                                <li>
+                                                    <form action="{{ route('update_chat_req') }}" method="post">
+                                                        @csrf
+                                                        <input type="hidden" name="cid" value="{{ $item->id }}" />
+                                                        <input type="hidden" name="status" value="Inactive" />
+                                                        <input type="submit" class="reject" value="Reject">
+                                                    </form>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @else
+                            <h2>Currently you don't have any chat request.</h2>
+                        @endif
 
                     </div>
                 </div>

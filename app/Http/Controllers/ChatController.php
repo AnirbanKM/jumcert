@@ -13,7 +13,12 @@ class ChatController extends Controller
     public function index()
     {
         $authUserId = auth()->user()->id;
-        $chatRequests = Chat::where('owner_id', $authUserId)->where('status', 'Inactive')->with('userinfo', 'userProfile')->get();
+        $chatRequests = Chat::where('owner_id', $authUserId)
+            ->where('status', 'Inactive')
+            ->where('seen', 0)
+            ->with('userinfo', 'userProfile')
+            ->get();
+
         return view('frontend.pages.chat.list', ['chatRequests' => $chatRequests]);
     }
 
