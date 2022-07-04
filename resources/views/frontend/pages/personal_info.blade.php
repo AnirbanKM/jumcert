@@ -19,7 +19,6 @@
     .personal-info-section1 .right-personal-info-section1 .info-wrapper ul li {
         margin-right: 30px !important;
     }
-
 </style>
 
 @section('content')
@@ -34,7 +33,19 @@
                 <div class="col-lg-9">
 
                     <div class="row right-personal-info-section1">
-                        <h2>Personal info</h2>
+
+                        <h2>Personal info
+                            @if ($user->userprofile !== null)
+                                <span class="badge badge-success" style="font-size: 12px; font-weight: 700;">
+                                    Your profile info is created.
+                                </span>
+                            @else
+                                <span class="badge badge-danger" style="font-size: 12px; font-weight: 700;">
+                                    You need to create your profile info.
+                                </span>
+                            @endif
+
+                        </h2>
                         <p>Info about you and your preferences across Jumcert portal</p>
 
                         <div class="info-wrapper">
@@ -132,7 +143,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 date-box">
-                                    <input type="date" placeholder="DOB" id="dob" autocomplete="off" name="birthday">
+                                    <input type="date" placeholder="DOB" id="dob" autocomplete="off"
+                                        name="birthday">
                                 </div>
                                 <div class="col-md-12">
                                     <select name="gender" id="gender">
@@ -144,7 +156,8 @@
                                     <input type="email" placeholder="Primary Email" id="p_email" name="email">
                                 </div>
                                 <div class="col-md-12 date-box">
-                                    <input type="email" placeholder="Secondary Email" id="s_email" name="secondary_email">
+                                    <input type="email" placeholder="Secondary Email" id="s_email"
+                                        name="secondary_email">
                                 </div>
                                 <div class="col-md-12 date-box">
                                     <input type="text" placeholder="Phone No" id="phone" name="phone">

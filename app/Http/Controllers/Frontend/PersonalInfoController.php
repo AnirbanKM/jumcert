@@ -15,7 +15,10 @@ class PersonalInfoController extends Controller
     public function index()
     {
         $user_id = Auth::user()->id;
-        return view('frontend.pages.personal_info');
+        $user = User::where('id', $user_id)->with('userprofile')->first();
+        // dd($user);
+
+        return view('frontend.pages.personal_info', ['user' => $user]);
     }
 
     public function user_info_create(Request $r)
