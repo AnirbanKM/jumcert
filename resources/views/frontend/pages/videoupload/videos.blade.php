@@ -47,8 +47,8 @@
                         <div class="col-md-12">
                             <ul class="nav tab-section" id="myTab" role="tablist">
                                 <li>
-                                    <a class="nav-link active" id="videos-tab" data-toggle="tab" href="#videos" role="tab"
-                                        aria-controls="videos" aria-selected="true">Videos</a>
+                                    <a class="nav-link active" id="videos-tab" data-toggle="tab" href="#videos"
+                                        role="tab" aria-controls="videos" aria-selected="true">Videos</a>
                                 </li>
                                 <li>
                                     <a class="nav-link" id="playlist-tab" data-toggle="tab" href="#playlist" role="tab"
@@ -84,12 +84,9 @@
                                                             {{ $video->created_at->diffForHumans() }}
                                                         </span>
                                                     </h3>
-                                                    <button>
-                                                        <i class="fas fa-ellipsis-h"></i>
-                                                    </button>
                                                 </div>
                                                 <div class="down">
-                                                    <ul>
+                                                    <ul class="d-none">
                                                         <li class="like"><a href="#"><i
                                                                     class="fas fa-thumbs-up"></i>0 Likes</a></li>
                                                         <li><a href="#"><i class="fas fa-eye"></i> 0 Views</a></li>
@@ -350,7 +347,8 @@
 
 @section('GoLiveModal')
     {{-- live stream create --}}
-    <div class="modal fade" id="live-modal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+    <div class="modal fade" id="live-modal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
+        aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
                 <div class="modal-header">
@@ -454,8 +452,7 @@
 
                                         {{-- stream Description --}}
                                         <div class="form-group">
-                                            <textarea placeholder="Description" class="mb-0" name="streaming_description"
-                                                placeholder="Streaming Description"></textarea>
+                                            <textarea placeholder="Description" class="mb-0" name="streaming_description" placeholder="Streaming Description"></textarea>
                                             @error('streaming_description')
                                                 <span class="text-danger d-block text-left">
                                                     {{ $message }}

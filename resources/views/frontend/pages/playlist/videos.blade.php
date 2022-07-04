@@ -30,7 +30,7 @@
                                     <img src="{{ $playlist->user_info->image }}" alt="">
                                     <div class="text">
                                         <h6>Bessie Cooper</h6>
-                                        <p>15.3M subscribers</p>
+                                        <p class="d-none">15.3M subscribers</p>
                                     </div>
                                 </div>
                                 <button>Following</button>
@@ -49,12 +49,9 @@
                                         <h3>{{ $video->title }}
                                             <span> {{ $video->created_at->diffForHumans() }}</span>
                                         </h3>
-                                        <button>
-                                            <i class="fas fa-ellipsis-h"></i>
-                                        </button>
                                     </div>
                                     <div class="down">
-                                        <ul>
+                                        <ul class="d-none">
                                             <li class="like"><a href="#"><i class="fas fa-thumbs-up"></i>0
                                                     Likes</a>
                                             </li>

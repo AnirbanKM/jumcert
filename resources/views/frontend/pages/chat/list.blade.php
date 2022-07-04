@@ -102,7 +102,11 @@
                                 </div>
                             @endforeach
                         @else
-                            <h2>Currently you don't have any chat request.</h2>
+                            <div class="col-md-12">
+                                <div class="heading">
+                                    <h2>Currently you don't have any chat request.</h2>
+                                </div>
+                            </div>
                         @endif
 
                     </div>
@@ -119,7 +123,6 @@
 @section('frontendJs')
     <script>
         jQuery(document).ready(function($) {
-
 
         });
     </script>

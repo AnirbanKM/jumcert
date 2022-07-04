@@ -64,14 +64,18 @@ class ChatController extends Controller
         $chatid = $r->cid;
         $status = $r->status;
 
-        $obj = Chat::find($chatid);
-        $obj->status = $status;
-        $obj->update();
-
         if ($status == "Active") {
+
+            $obj = Chat::find($chatid);
+            $obj->status = $status;
+            $obj->update();
+
             $msg = "Your are created a connection";
             return redirect()->route('home')->with('success', $msg);
         } else {
+
+            $obj = Chat::find($chatid)->delete();
+
             $msg = "You are declined this user";
             return redirect()->route('view_chat_requests')->with('success', $msg);
         }
