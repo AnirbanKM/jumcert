@@ -78,7 +78,7 @@ class HomeController extends Controller
             $authUser = User::find($uid);
 
             if ($authUser->upgradationDate > 0) {
-                if (time() - $authUser->upgradationDate > (28 * 86400)) {
+                if (time() - $authUser->upgradationDate > (28 * 24 * 60 * 60)) {
                     $authUser->upgradationDate = "0";
                     $authUser->user_role = 0;
                     $authUser->update();

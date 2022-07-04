@@ -30,10 +30,12 @@
                         Forgot Password
                     </a>
                     <p class="log-bg">Or Login with</p>
-                    <a href="#" class="mod-btn fb-btn"> <img src="{{ asset('frontend/img/fb.png') }}" alt="">
+                    <a href="#" class="mod-btn fb-btn"> <img src="{{ asset('frontend/img/fb.png') }}"
+                            alt="">
                         Sign In with Facebook
                     </a>
-                    <a href="#" class="mod-btn ggl-btn"><img src="{{ asset('frontend/img/google.png') }}" alt="">
+                    <a href="#" class="mod-btn ggl-btn"><img src="{{ asset('frontend/img/google.png') }}"
+                            alt="">
                         Sign In with Google</a>
                     <p class="reg-link">Don’t have an account?
                         <a href="" data-toggle="modal" data-target="#smallModal2">Register</a>
@@ -45,8 +47,7 @@
 </div>
 
 <!-- register -->
-<div class="modal fade" id="smallModal2" tabindex="-1" role="dialog" aria-labelledby="basicModal"
-    aria-hidden="true">
+<div class="modal fade" id="smallModal2" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
     <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
@@ -71,8 +72,7 @@
                         <p class="text-danger m-0 text-left" id="emailErr"></p>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="mb-0" name="password" id="password"
-                            placeholder="Password">
+                        <input type="password" class="mb-0" name="password" id="password" placeholder="Password">
                         <p class="text-danger m-0 text-left" id="passErr"></p>
                     </div>
                     <div class="form-group">
@@ -86,10 +86,12 @@
                         Password
                     </a>
                     <p class="log-bg">Or Login with</p>
-                    <a href="#" class="mod-btn fb-btn"> <img src="{{ asset('frontend/img/fb.png') }}" alt="">
+                    <a href="#" class="mod-btn fb-btn"> <img src="{{ asset('frontend/img/fb.png') }}"
+                            alt="">
                         Sign In with Facebook
                     </a>
-                    <a href="#" class="mod-btn ggl-btn"><img src="{{ asset('frontend/img/google.png') }}" alt="">
+                    <a href="#" class="mod-btn ggl-btn"><img src="{{ asset('frontend/img/google.png') }}"
+                            alt="">
                         Sign In with Google
                     </a>
                     <p class="reg-link">Alredy have an account? <a href="" data-toggle="modal"
@@ -180,18 +182,19 @@
                         data: form.serialize(),
                         dataType: "json",
                         success: function(resp) {
-                            if (resp.errors) {
-                                $("#smallModal").hide();
-                                $(".modal-backdrop").remove();
-                                notification(resp.errors, "error");
-                                setTimeout(function() {
-                                    location.reload();
-                                }, 2000);
-                            } else {
-                                console.log(resp);
-                                window.location.href = "{{ route('home') }}";
-                                notification(resp.success, "success");
-                            }
+                            console.log(resp);
+                            // if (resp.errors) {
+                            //     $("#smallModal").hide();
+                            //     $(".modal-backdrop").remove();
+                            //     notification(resp.errors, "error");
+                            //     setTimeout(function() {
+                            //         location.reload();
+                            //     }, 2000);
+                            // } else {
+                            //     console.log(resp);
+                            //     window.location.href = "{{ route('home') }}";
+                            //     notification(resp.success, "success");
+                            // }
                         }
                     });
                 }
@@ -376,8 +379,7 @@
                     registered email address.</p>
                 {{-- <form action=""> --}}
                 <input type="email" placeholder="Enter OTP">
-                <input type="submit" class="otp" value="Reset" data-toggle="modal"
-                    data-target="#smallModal5">
+                <input type="submit" class="otp" value="Reset" data-toggle="modal" data-target="#smallModal5">
                 {{-- </form> --}}
             </div>
 
