@@ -32,7 +32,7 @@ class PrivateVideoController extends Controller
         $amount = (int) $amount;
 
         $payment_intent = \Stripe\PaymentIntent::create([
-            'description' => 'Stripe Test Payment',
+            'description' => 'Stripe Live Payment',
             'amount' => $amount,
             'currency' => 'USD',
             'description' => 'Payment from Jumcert',

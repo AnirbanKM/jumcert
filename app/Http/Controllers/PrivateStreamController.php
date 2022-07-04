@@ -34,10 +34,10 @@ class PrivateStreamController extends Controller
         $amount = (int) $amount;
 
         $payment_intent = \Stripe\PaymentIntent::create([
-            'description' => 'Stripe Test Payment',
+            'description' => 'Stripe Live Payment',
             'amount' => $amount,
             'currency' => 'USD',
-            'description' => 'Payment From Anirban_KM',
+            'description' => 'Payment from Jumcert',
             'payment_method_types' => ['card'],
         ]);
         $intent = $payment_intent->client_secret;
