@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+
+@section('frontendCss')
+@endsection
+
 @section('content')
     <section class="page_content about-section1">
         <div class="container">
@@ -34,11 +38,16 @@
                                     @csrf
 
                                     <div class="row">
+
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="country">Enter Country Code</label>
-                                                <input type="text" placeholder="Enter Country Code" class="form-control"
-                                                    class="mb-0" name="country" id="country">
+
+                                                <select class="form-control mb-0 countrycode" name="country" id="country">
+                                                    <option value="AL">Alabama</option>
+                                                    <option value="WY">Wyoming</option>
+                                                </select>
+
                                                 @error('country')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -46,8 +55,13 @@
 
                                             <div class="form-group">
                                                 <label for="currency">Enter Currency Code</label>
-                                                <input type="text" placeholder="Enter Country Code" class="form-control"
-                                                    class="mb-0" name="currency" id="currency">
+
+                                                <select class="form-control mb-0 currencycode" name="currency"
+                                                    id="currency">
+                                                    <option value="AL">Alabama</option>
+                                                    <option value="WY">Wyoming</option>
+                                                </select>
+
                                                 @error('currency')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -56,17 +70,23 @@
                                             <div class="form-group">
                                                 <label for="accountholdername">Account holder name</label>
                                                 <input type="text" placeholder="Account holder name" class="form-control"
-                                                    class="mb-0" name="account_holder_name" id="accountholdername">
+                                                    class="mb-0" name="account_holder_name" id="accountholdername" />
                                                 @error('account_holder_name')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
                                         </div>
+
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="accountholdertype">Account holder type</label>
-                                                <input type="text" placeholder="Account holder name" class="form-control"
-                                                    class="mb-0" name="account_holder_type" id="accountholdertype">
+
+                                                <select class="form-control mb-0" id="accountholdertype"
+                                                    name="account_holder_type">
+                                                    <option value="individual">Individual</option>
+                                                    <option value="company">Company</option>
+                                                </select>
+
                                                 @error('account_holder_type')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
@@ -101,44 +121,47 @@
                         </div>
                     </div>
 
-                    <div class="row mt-4">
-                        <div class="col-md-12">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Accunt holder name</th>
-                                            <th>Accunt holder type</th>
-                                            <th>Bank name</th>
-                                            <th>Country</th>
-                                            <th>Currency</th>
-                                            <th>Time</th>
-                                            <th>delete</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($data as $item)
+                    @if (count($data) > 0)
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
                                             <tr>
-                                                <td> {{ $item->account_holder_name }} </td>
-                                                <td> {{ $item->account_holder_type }} </td>
-                                                <td> {{ $item->bank_name }} </td>
-                                                <td> {{ $item->country }} </td>
-                                                <td> {{ $item->currency }} </td>
-                                                <td> {{ $item->created_at->diffForHumans() }} </td>
-                                                <td>
-                                                    <form action="{{ route('del_payment_info') }}" method="post">
-                                                        @csrf
-                                                        <input type="hidden" name="id" value={{ $item->id }} />
-                                                        <input type="submit" value="Delete" class="btn btn-danger" />
-                                                    </form>
-                                                </td>
+                                                <th>Accunt holder name</th>
+                                                <th>Accunt holder type</th>
+                                                <th>Bank name</th>
+                                                <th>Country</th>
+                                                <th>Currency</th>
+                                                <th>Time</th>
+                                                <th>delete</th>
                                             </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($data as $item)
+                                                <tr>
+                                                    <td> {{ $item->account_holder_name }} </td>
+                                                    <td> {{ $item->account_holder_type }} </td>
+                                                    <td> {{ $item->bank_name }} </td>
+                                                    <td> {{ $item->country }} </td>
+                                                    <td> {{ $item->currency }} </td>
+                                                    <td> {{ $item->created_at->diffForHumans() }} </td>
+                                                    <td>
+                                                        <form action="{{ route('del_payment_info') }}" method="post">
+                                                            @csrf
+                                                            <input type="hidden" name="id"
+                                                                value={{ $item->id }} />
+                                                            <input type="submit" value="Delete" class="btn btn-danger" />
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
 
                 </div>
             </div>
@@ -148,6 +171,9 @@
 @endsection
 
 @section('frontendJs')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
         jQuery(document).ready(function($) {
 
@@ -161,6 +187,9 @@
                     closeWith: ['click', 'button']
                 }).show();
             }
+
+            $('.countrycode').select2();
+            $('.currencycode').select2();
 
         });
     </script>

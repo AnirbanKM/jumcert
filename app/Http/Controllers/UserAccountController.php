@@ -17,6 +17,8 @@ class UserAccountController extends Controller
 
     public function create_payment_info(Request $r)
     {
+        dd($r);
+
         $country = $r->country;
         $currency = $r->currency;
         $accountHolderName = $r->account_holder_name;
