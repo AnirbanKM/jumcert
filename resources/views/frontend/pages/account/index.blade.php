@@ -27,6 +27,13 @@
                                 </h2>
                             </div>
 
+                            @if (Session::has('success'))
+                                <span class="badge badge-success"
+                                    style="font-size: 12px; font-weight: 700; white-space: normal; text-align: left;">
+                                    {{ session::get('success') }}
+                                </span>
+                            @endif
+
                             @if (Session::has('error'))
                                 <span class="badge badge-danger"
                                     style="font-size: 12px; font-weight: 700; white-space: normal; text-align: left;">

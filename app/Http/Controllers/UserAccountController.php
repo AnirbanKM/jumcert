@@ -48,7 +48,7 @@ class UserAccountController extends Controller
         try {
 
             $stripeResp = Http::asForm()
-                ->withToken('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')
+                ->withToken('sk_test_51KZo9yG6d8NW7tSt7425Hb2Bq8FTBVfVtqADD0F5Ug9OBRNre475ldk0N4zNv2b7DvdDFzZfNqE2ynnLuZEYP6gS0006PVsk8j')
                 ->post('https://api.stripe.com/v1/tokens', [
                     'bank_account' =>
                     [
