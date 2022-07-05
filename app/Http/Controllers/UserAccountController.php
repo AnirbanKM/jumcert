@@ -95,7 +95,11 @@ class UserAccountController extends Controller
     public function del_payment_info(Request $r)
     {
         $id = $r->id;
-        $obj = UserAccount::find($id)->delete();
-        return redirect()->route('user_account')->with('success', 'Successfully deleted your account');
+        try {
+            $obj = UserAccount::find($id)->delete();
+            return redirect()->route('user_account')->with('success', 'Successfully deleted your account');
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }
