@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-
-@section('frontendCss')
-@endsection
-
 @section('content')
     <section class="page_content about-section1">
         <div class="container">
@@ -31,6 +27,13 @@
                                 </h2>
                             </div>
 
+                            @if (Session::has('error'))
+                                <span class="badge badge-danger"
+                                    style="font-size: 12px; font-weight: 700; white-space: normal; text-align: left;">
+                                    {{ session::get('error') }}
+                                </span>
+                            @endif
+
                             @if (count($data) > 0)
                                 <h3 class="text-uppercase text-info">Your already added your account</h3>
                             @else
@@ -43,13 +46,9 @@
                                             <div class="form-group">
                                                 <label for="country">Enter Country Code</label>
 
-                                                <select class="form-control mb-0 countrycode" name="country" id="country">
-                                                    @foreach ($countrycode as $item)
-                                                        <option value="{{ $item->CountryCode }}">
-                                                            {{ $item->CountryCode }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="text" placeholder="Enter country" value="US"
+                                                    class="form-control" class="mb-0" name="country" id="country"
+                                                    readonly />
 
                                                 @error('country')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -59,14 +58,9 @@
                                             <div class="form-group">
                                                 <label for="currency">Enter Currency</label>
 
-                                                <select class="form-control mb-0 currencycode" name="currency"
-                                                    id="currency">
-                                                    @foreach ($currency as $item)
-                                                        <option value="{{ $item->currency_code }}">
-                                                            {{ $item->currency_code }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="text" placeholder="Enter currency" value="USD"
+                                                    class="form-control" class="mb-0" name="currency" id="currency"
+                                                    readonly />
 
                                                 @error('currency')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -178,25 +172,27 @@
 
 @section('frontendJs')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js">
+        < />
 
-    <script>
-        jQuery(document).ready(function($) {
+        <
+        script >
+            jQuery(document).ready(function($) {
 
-            function notification(resp, status) {
-                new Noty({
-                    theme: 'sunset',
-                    type: status,
-                    layout: 'topRight',
-                    text: resp,
-                    timeout: 3000,
-                    closeWith: ['click', 'button']
-                }).show();
-            }
+                function notification(resp, status) {
+                    new Noty({
+                        theme: 'sunset',
+                        type: status,
+                        layout: 'topRight',
+                        text: resp,
+                        timeout: 3000,
+                        closeWith: ['click', 'button']
+                    }).show();
+                }
 
-            $('.countrycode').select2();
-            $('.currencycode').select2();
+                $('.countrycode').select2();
+                $('.currencycode').select2();
 
-        });
-    </script>
-@endsection
+            }); <
+        />
+    @endsection

@@ -48,12 +48,12 @@ class UserAccountController extends Controller
         try {
 
             $stripeResp = Http::asForm()
-                ->withToken('sk_test_51KZo9yG6d8NW7tSt7425Hb2Bq8FTBVfVtqADD0F5Ug9OBRNre475ldk0N4zNv2b7DvdDFzZfNqE2ynnLuZEYP6gS0006PVsk8j')
+                ->withToken('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')
                 ->post('https://api.stripe.com/v1/tokens', [
                     'bank_account' =>
                     [
-                        'country' => $country,
-                        'currency' => $currency,
+                        'country' => 'US',
+                        'currency' => 'USD',
                         'account_holder_name' => $accountHolderName,
                         'account_holder_type' => $accountHolderType,
                         'routing_number' => $routingNumber,
@@ -63,30 +63,36 @@ class UserAccountController extends Controller
 
             $response = json_decode($stripeResp->body());
 
-            $obj = new UserAccount();
-            $obj->user_id = auth()->user()->id;
-            $obj->resp_id = $response->id;
-            $obj->resp_object = $response->object;
-            $obj->bank_account_id = $response->bank_account->id;
-            $obj->bank_account_object = $response->bank_account->object;
-            $obj->account_holder_name = $response->bank_account->account_holder_name;
-            $obj->account_holder_type = $response->bank_account->account_holder_type;
-            $obj->account_type = $response->bank_account->account_type;
-            $obj->bank_name = $response->bank_account->bank_name;
-            $obj->country = $response->bank_account->country;
-            $obj->currency = $response->bank_account->currency;
-            $obj->fingerprint = $response->bank_account->fingerprint;
-            $obj->last4 = $response->bank_account->last4;
-            $obj->routing_number = $response->bank_account->routing_number;
-            $obj->status = $response->bank_account->status;
-            $obj->client_ip = $response->client_ip;
-            $obj->created = $response->created;
-            $obj->livemode = $response->livemode;
-            $obj->type = $response->type;
-            $obj->used = $response->used;
-            $obj->save();
+            if (isset($response->id)) {
 
-            return redirect()->route('user_account')->with('success', 'Your account crerated successfully');
+                $obj = new UserAccount();
+                $obj->user_id = auth()->user()->id;
+                $obj->resp_id = $response->id;
+                $obj->resp_object = $response->object;
+                $obj->bank_account_id = $response->bank_account->id;
+                $obj->bank_account_object = $response->bank_account->object;
+                $obj->account_holder_name = $response->bank_account->account_holder_name;
+                $obj->account_holder_type = $response->bank_account->account_holder_type;
+                $obj->account_type = $response->bank_account->account_type;
+                $obj->bank_name = $response->bank_account->bank_name;
+                $obj->country = $response->bank_account->country;
+                $obj->currency = $response->bank_account->currency;
+                $obj->fingerprint = $response->bank_account->fingerprint;
+                $obj->last4 = $response->bank_account->last4;
+                $obj->routing_number = $response->bank_account->routing_number;
+                $obj->status = $response->bank_account->status;
+                $obj->client_ip = $response->client_ip;
+                $obj->created = $response->created;
+                $obj->livemode = $response->livemode;
+                $obj->type = $response->type;
+                $obj->used = $response->used;
+                $obj->save();
+
+                return redirect()->route('user_account')->with('success', 'Your account crerated successfully');
+            } else {
+
+                return redirect()->route('user_account')->with('error', $response->error->message);
+            }
         } catch (\Throwable $th) {
             throw $th;
         }

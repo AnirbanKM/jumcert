@@ -36,7 +36,6 @@
                 transform: rotate(360deg);
             }
         }
-
     </style>
 </head>
 
@@ -61,7 +60,7 @@
                 type: 'success',
                 layout: 'topRight',
                 text: "{{ session::get('success') }}",
-                timeout: 3000,
+                timeout: 5000,
                 closeWith: ['click', 'button']
             }).show();
         </script>
@@ -74,7 +73,7 @@
                 type: 'error',
                 layout: 'topRight',
                 text: "{{ session::get('error') }}",
-                timeout: 3000,
+                timeout: 5000,
                 closeWith: ['click', 'button']
             }).show();
         </script>
