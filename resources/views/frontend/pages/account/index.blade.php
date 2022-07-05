@@ -44,8 +44,11 @@
                                                 <label for="country">Enter Country Code</label>
 
                                                 <select class="form-control mb-0 countrycode" name="country" id="country">
-                                                    <option value="AL">Alabama</option>
-                                                    <option value="WY">Wyoming</option>
+                                                    @foreach ($countrycode as $item)
+                                                        <option value="{{ $item->CountryCode }}">
+                                                            {{ $item->CountryCode }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
 
                                                 @error('country')
@@ -54,12 +57,15 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label for="currency">Enter Currency Code</label>
+                                                <label for="currency">Enter Currency</label>
 
                                                 <select class="form-control mb-0 currencycode" name="currency"
                                                     id="currency">
-                                                    <option value="AL">Alabama</option>
-                                                    <option value="WY">Wyoming</option>
+                                                    @foreach ($currency as $item)
+                                                        <option value="{{ $item->currency_code }}">
+                                                            {{ $item->currency_code }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
 
                                                 @error('currency')

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Frontend\UserAccount;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class UserAccountController extends Controller
@@ -12,13 +13,22 @@ class UserAccountController extends Controller
     {
         $uid = auth()->user()->id;
         $query = UserAccount::where('user_id', $uid)->with('account')->get();
-        return view('frontend.pages.account.index', ['data' => $query]);
+
+        // Fetch country code from DB
+        $countrycode = DB::table('countrycodes')->get();
+
+        // Fetch currency code from DB
+        $currency = DB::table('currency')->get();
+
+        return view('frontend.pages.account.index', [
+            'data' => $query,
+            'countrycode' => $countrycode,
+            'currency' => $currency
+        ]);
     }
 
     public function create_payment_info(Request $r)
     {
-        dd($r);
-
         $country = $r->country;
         $currency = $r->currency;
         $accountHolderName = $r->account_holder_name;
@@ -35,23 +45,24 @@ class UserAccountController extends Controller
             'account_number' => 'required|max:12',
         ]);
 
-        $stripeResp = Http::asForm()
-            ->withToken('sk_test_51KZo9yG6d8NW7tSt7425Hb2Bq8FTBVfVtqADD0F5Ug9OBRNre475ldk0N4zNv2b7DvdDFzZfNqE2ynnLuZEYP6gS0006PVsk8j')
-            ->post('https://api.stripe.com/v1/tokens', [
-                'bank_account' =>
-                [
-                    'country' => $country,
-                    'currency' => $currency,
-                    'account_holder_name' => $accountHolderName,
-                    'account_holder_type' => $accountHolderType,
-                    'routing_number' => $routingNumber,
-                    'account_number' => $accountNumber,
-                ]
-            ]);
-
-        $response = json_decode($stripeResp->body());
-
         try {
+
+            $stripeResp = Http::asForm()
+                ->withToken('sk_test_51KZo9yG6d8NW7tSt7425Hb2Bq8FTBVfVtqADD0F5Ug9OBRNre475ldk0N4zNv2b7DvdDFzZfNqE2ynnLuZEYP6gS0006PVsk8j')
+                ->post('https://api.stripe.com/v1/tokens', [
+                    'bank_account' =>
+                    [
+                        'country' => $country,
+                        'currency' => $currency,
+                        'account_holder_name' => $accountHolderName,
+                        'account_holder_type' => $accountHolderType,
+                        'routing_number' => $routingNumber,
+                        'account_number' => $accountNumber,
+                    ]
+                ]);
+
+            $response = json_decode($stripeResp->body());
+
             $obj = new UserAccount();
             $obj->user_id = auth()->user()->id;
             $obj->resp_id = $response->id;
