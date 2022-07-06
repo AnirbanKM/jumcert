@@ -60,7 +60,8 @@
                                 </li>
                                 <li>
                                     <a class="nav-link" id="live-tab" data-toggle="tab" href="#live" role="tab"
-                                        aria-controls="live" aria-selected="false">Upcoming Live</a>
+                                        aria-controls="live" aria-selected="false">Upcoming
+                                        Live</a>
                                 </li>
                                 <li>
                                     <a class="nav-link " id="live-tab" data-toggle="tab" href="#livehistory" role="tab"
@@ -161,13 +162,29 @@
                                 </div>
                             </div>
 
+                            @if (session()->has('streamErr'))
+                                <script>
+                                    var videosTab = document.getElementById("videos-tab");
+                                    videosTab.classList.remove("active");
+
+                                    var liveTab = document.getElementById("live-tab");
+                                    liveTab.classList.add("active");
+
+                                    var videos = document.getElementById("videos");
+                                    videos.classList.remove("show", "active");
+                                </script>
+                            @endif
+
                             {{-- Live Stream Create --}}
-                            <div class="tab-pane fade" id="live" role="tabpanel" aria-labelledby="live">
+                            <div class="tab-pane fade {{ Session::get('streamErr') }}" id="live" role="tabpanel"
+                                aria-labelledby="live">
+
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="upload_video_frm live-video-frm">
                                             <div class="row right-homepage-section1">
                                                 <div class="col-md-12">
+
                                                     <div class="heading">
                                                         <h2>Upcoming Live</h2>
                                                         <a href="#" data-toggle="modal" data-target="#live-modal">
@@ -181,6 +198,13 @@
                                                             </div>
                                                         </a>
                                                     </div>
+
+                                                    @if (session()->has('error'))
+                                                        <span class="badge badge-danger" style="margin: 10px;">
+                                                            {{ Session::get('error') }}
+                                                        </span>
+                                                    @endif
+
                                                 </div>
                                             </div>
                                         </div>

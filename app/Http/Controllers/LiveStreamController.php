@@ -37,23 +37,24 @@ class LiveStreamController extends Controller
             'streaming_playlist' => 'required',
             'streaming_channel' => 'required',
             'streaming_description' => 'required',
-            'stream_type' => 'required',
-            'thumbnail' => 'mimes:jpeg,jpg,png,webp|required|max:10000',
+            'stream_type' => 'required'
         ]);
 
         if ($r->hasFile('thumbnail')) {
             $allowedImageExtension = ['jpg', 'png', 'jpeg', 'webp'];
             $extension = $thumbnail->getClientOriginalExtension();
+
             $checkImage = in_array($extension, $allowedImageExtension);
 
-            if ($checkImage == true) {
+            if ($checkImage == 1) {
                 $file = $r->file('thumbnail');
                 $thumbnailName = time() . $file->getClientOriginalName();
+
                 $path = $file->storeAs('jumcert', $thumbnailName, 's3'); // Thumbnail store in Amazon S3
                 $thumbnailLink = "https://jumcertstorage.s3.us-east-1.amazonaws.com/" . $path;
             } else {
-                session()->flash('error', 'Please select a valid image format');
-                return redirect()->back();
+                session()->flash('error', 'Please select a valid image format !!!');
+                return redirect()->back()->with('streamErr', 'active show');
             }
         }
 
