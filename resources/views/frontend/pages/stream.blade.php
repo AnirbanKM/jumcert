@@ -41,9 +41,9 @@
                                             {{-- Logic for Private Videos --}}
                                             @if ($stream->stream_type == 'Private')
                                                 {{-- If the stream Buyer Limit = 0 Then 1:Many buyer --}}
-                                                @if ($stream->stream_buyer_limit === 0)
+                                                @if ($stream->stream_buyer_limit == 0)
                                                     {{-- Check if auth user once purchased the private stream or not --}}
-                                                    @if ($stream->user_purchased_video === null)
+                                                    @if ($stream->user_purchased_video == null)
                                                         {{-- IF stream user_id & auth user_id is same || The Host Stream --}}
                                                         @if ($stream->user_id == Auth::user()->id)
                                                             <div class="thumbnail publicModals" data-id={{ $stream->id }}>
@@ -56,6 +56,7 @@
                                                                 @endif
                                                             </div>
 
+                                                            {{-- stream host modal --}}
                                                             <div class="modal fade show" id="publicModal{{ $stream->id }}"
                                                                 tabindex="-1" role="dialog" aria-hidden="true">
                                                                 <div class="modal-dialog ">
@@ -116,7 +117,7 @@
                                                     @endif
                                                 @else
                                                     {{-- else the stream Buyer Limit = 1 Then 1:1 buyer --}}
-                                                    <div class="thumbnail blurProStream">
+                                                    <div class="blurProStream">
                                                         @if ($stream->thumbnail == null)
                                                             <img src="{{ asset('thumbnail.jpg') }}" class="w-100"
                                                                 alt="" />
@@ -512,8 +513,8 @@
 
             // Private Link Share modal
             $('.privateLink').click(function(event) {
-                
-               $("#privateStreamSharemodal").addClass('show').css('display', 'block');
+
+                $("#privateStreamSharemodal").addClass('show').css('display', 'block');
             });
 
         });
