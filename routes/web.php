@@ -251,10 +251,12 @@ Route::group(['middleware' => ['auth', 'role:1,2']], function () {
 
 // Pro Plan Routes for users
 Route::group(['middleware' => ['auth', 'role:1']], function () {
+    // Currently No Route needed for Pro Role users
 });
 
 // Business Routes
 Route::group(['middleware' => ['auth', 'role:2']], function () {
+    // Currently No Route needed for Business Role users
 });
 
 

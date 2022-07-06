@@ -13,5 +13,4 @@
  <script src="{{ asset('noty/noty.js') }}"></script>
 
  {{-- Data table JS --}}
- <script src="{{ asset('backend/vendor/datatables/jquery.dataTables.min.js') }}"></script>
- <script src="{{ asset('backend/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+ <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>

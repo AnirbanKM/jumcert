@@ -16,4 +16,4 @@
 <link href="{{ asset('backend/css/sb-admin-2.min.css') }}" rel="stylesheet" />
 
 {{-- dataTables css CDN --}}
-<link rel="stylesheet" type="text/css" href="{{ asset('backend/vendor/datatables/dataTables.bootstrap4.min.css') }}">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">

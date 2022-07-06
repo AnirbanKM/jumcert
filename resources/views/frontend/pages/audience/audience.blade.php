@@ -146,7 +146,7 @@
         };
 
         $("#leave").click(function() {
-            alert("stopRecordingFun");
+            stopRecordingFun();
         });
 
         // Stop record function

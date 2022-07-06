@@ -12,7 +12,7 @@
 </style>
 
 @section('content')
-    <h1 class="h3 mb-4 text-gray-800">Category Page</h1>
+    <h1 class="h3 mb-4 text-gray-800">Commission Page</h1>
 
     <div class="row">
 

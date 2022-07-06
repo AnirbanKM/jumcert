@@ -16,7 +16,6 @@
         width: 150px;
         object-fit: cover;
     }
-
 </style>
 
 @section('content')
@@ -24,7 +23,6 @@
 
     <div class="row">
         <div class="col-12">
-
             <table id="table_id" class="display" style="width: 100%;">
                 <thead>
                     <tr>
@@ -67,7 +65,6 @@
                     @endforeach
                 </tbody>
             </table>
-
         </div>
     </div>
 @endsection

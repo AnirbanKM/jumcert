@@ -1,15 +1,24 @@
 @extends('backend.layouts.admin')
 
+<style>
+    table tr th,
+    table tr td {
+        text-align: center !important;
+    }
+
+    table tbody tr p {
+        margin-bottom: 10px;
+    }
+</style>
+
 @section('content')
     <h1 class="h3 mb-4 text-gray-800">Payment Info</h1>
 
     <div class="row">
-
         <div class="col-12">
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" class="display" id="paymentTableId" width="100%"
-                        cellspacing="0">
+                    <table id="table_id" class="display" style="width: 100%;">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -35,15 +44,21 @@
                                         @endif
                                     </td>
 
-                                    @isset($user->usersPayment)
+                                    @if (@isset($user->usersPayment))
                                         <td> {{ $user->usersPayment->status }}</td>
                                         <td> {{ $user->usersPayment->payment_id }}</td>
-                                    @endisset
+                                    @else
+                                        <td> -- </td>
+                                        <td> -- </td>
+                                    @endif
 
-                                    @isset($user->usersOrders)
+                                    @if (@isset($user->usersOrders))
                                         <td> {{ $user->usersOrders->price }}</td>
                                         <td> {{ $user->usersOrders->created_at }}</td>
-                                    @endisset
+                                    @else
+                                        <td> -- </td>
+                                        <td> -- </td>
+                                    @endif
                                 </tr>
                             @endforeach
 
@@ -56,8 +71,8 @@
 
     @section('adminjs')
         <script>
-            jQuery(document).ready(function($) {
-                // $('#paymentTableId').DataTable();
-            })
+            jQuery(document).ready(function() {
+                $('#table_id').DataTable();
+            });
         </script>
     @endsection
