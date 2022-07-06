@@ -298,7 +298,8 @@
                                                         }
                                                         if (resp.errors.email !== "") {
                                                             $("#emailErr").text(resp.errors
-                                                                .email);
+                                                                .email).addClass(
+                                                                'text-danger');
                                                         }
                                                         if (resp.errors.password !== "") {
                                                             $("#passErr").text(resp.errors
