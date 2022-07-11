@@ -1,3 +1,13 @@
+<style>
+    h6.unseen {
+        font-size: 10px;
+        background: green;
+        border-radius: 50%;
+        padding: 5px;
+        line-height: 5px;
+    }
+</style>
+
 {{-- Chat with Friends --}}
 @auth
     <div class="user-head">
@@ -48,3 +58,5 @@
         </div>
     </div>
 </div>
+
+@include('frontend.pages.global.chatscript')

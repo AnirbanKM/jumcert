@@ -84,6 +84,9 @@
     @yield('GoLiveModal')
     @yield('frontendJs')
 
+    @include('frontend.pages.global.chat')
+    @include('frontend.pages.global.chatscript')
+
 </body>
 
 </html>

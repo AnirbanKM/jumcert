@@ -12,6 +12,31 @@
             }).show();
         }
 
+        $('body').on('click', '.card_img', function(e) {
+
+            var id = $(this).data('id');
+            $('#vId').val(id);
+            $('#privateModal').addClass('show').css('display', 'block');
+        });
+
+        $('#loginJumcertBtn').click(function() {
+            $('#privateModal').removeClass('show').css('display', 'none');
+            $('#smallModal').addClass('show').css('display', 'block');
+        });
+
+        $(".privateModalClose").click(function(event) {
+
+            $('#privateModal').removeClass('show').css('display', 'none');
+            $('#privateVideoSharemodal').removeClass('show').css('display', 'none');
+            $('#publicVideoSharemodal').removeClass('show').css('display', 'none');
+        });
+
+        $('body').on('click', '.eachReqModal', function(e) {
+            var vid = $(this).data('vid');
+            $('#vid').val(vid);
+            $("#chatModal").addClass('show').css('display', 'block');
+        });
+
         // Send chat request to the channel owner
         $('body').on('submit', '#sendChatReq', function(e) {
             e.preventDefault();
@@ -44,6 +69,24 @@
             });
         });
 
+        // Popup login Modal
+        $('.showLogin').click(function() {
+
+            $('#privateModal').addClass('show').css('display', 'block');
+        });
+
+        // Popup Modal for those who are the owner of the video
+        $('.videoOwner').click(function() {
+
+            $('#videoOwnerModal').addClass('show').css('display', 'block');
+        });
+
+        // Close videoOwner Modal
+        $(".videoOwnerModalClose").click(function(event) {
+
+            $('#videoOwnerModal').removeClass('show').css('display', 'none');
+        });
+
         @auth
         //List All Frinds chat List
         setInterval(function() {
@@ -62,6 +105,95 @@
                 }
             })
         }
+
+        // ***Generate link for public video function
+        $("body").on('click', '.publicLink', function(e) {
+
+            var id = $(this).data('id');
+
+            $.ajax({
+                url: "{{ route('public_video_link') }}",
+                type: "GET",
+                dataType: "json",
+                data: {
+                    vid: id
+                },
+                success: function(resp) {
+                    console.log(resp);
+                    $('#publicVideoURL').html(resp.path);
+                    $("#publicVideoSharemodal").addClass('show').css('display', 'block');
+                    $('#facebook').attr('href', resp.fb);
+                    $('#whatsapp').attr('href', resp.wp);
+                }
+            });
+        });
+
+        $(".copy-btn").click(function() {
+            var temp = $("<input>");
+            $("body").append(temp);
+            temp.val($('#publicVideoURL').text()).select();
+            document.execCommand("copy");
+            temp.remove();
+            $(this).text("Copied!");
+            $(this).css({
+                color: '#fff',
+                background: '#1c1c1c',
+            });
+        });
+
+        // ***Like videos
+        $("body").on('click', '.likevideo', function(e) {
+
+            var id = $(this).data('vid');
+
+            $.ajax({
+                url: "{{ route('video_like') }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: id
+                },
+                success: function(resp) {
+                    console.log(resp);
+
+                    if (resp.status === 'liked') {
+                        $('#like' + id).addClass('dislikevideo').removeClass('likevideo');
+                        $('#likeCount' + id).text(resp.count);
+                    } else {
+                        $('#like' + id).addClass('likevideo').removeClass('dislikevideo');
+                        $('#likeCount' + id).text(resp.count);
+                    }
+                }
+            })
+        });
+
+        // ***Dislike videos
+        $("body").on('click', '.dislikevideo', function(e) {
+
+            var id = $(this).data('vid');
+
+            $.ajax({
+                url: "{{ route('video_dislike') }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    id: id
+                },
+                success: function(resp) {
+                    console.log(resp);
+
+                    if (resp.status === 'disliked') {
+                        $('#like' + id).addClass('likevideo').removeClass('dislikevideo');
+                        $('#likeCount' + id).text(resp.count);
+                    } else {
+                        $('#like' + id).addClass('dislikevideo').removeClass('likevideo');
+                        $('#likeCount' + id).text(resp.count);
+                    }
+                }
+            })
+        });
     @endauth
 
     // Click On Friend Name || Receiver Name
@@ -191,6 +323,12 @@
         let messageBody = document.querySelector('#messageBody');
         messageBody.scrollTop = messageBody.scrollHeight;
     }
+
+    // ***ALert funtionality for Private Video Share
+    $("body").on('click', '.Private', function(e) {
+
+        $("#privateVideoSharemodal").addClass('show').css('display', 'block');
+    })
 
     });
 </script>
