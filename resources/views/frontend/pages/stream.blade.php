@@ -421,6 +421,7 @@
     </div>
 
     @include('frontend.inc.startsec')
+
 @endsection
 
 @section('frontendJs')

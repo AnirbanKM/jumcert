@@ -83,6 +83,7 @@
 
     @yield('GoLiveModal')
     @yield('frontendJs')
+
 </body>
 
 </html>
