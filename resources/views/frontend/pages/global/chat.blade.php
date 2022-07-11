@@ -58,5 +58,3 @@
         </div>
     </div>
 </div>
-
-@include('frontend.pages.global.chatscript')
