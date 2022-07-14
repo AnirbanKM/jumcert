@@ -18,6 +18,7 @@
             $('#privateModal').addClass('show').css('display', 'block');
         });
 
+
         $('body').on('click', '.eachReqModal', function(e) {
 
             var vid = $(this).data('vid');
@@ -57,6 +58,49 @@
             });
         });
 
+        // Click On Friend Name || Receiver Name
+        $("body").on('click', '.chatM', function(e) {
+            e.preventDefault();
+
+            var id = $(this).data('rid');
+            var sid = $(this).data('sid');
+            var vid = $(this).data('vid');
+            var vownerid = $(this).data('vownerid');
+
+            $.ajax({
+                url: "{{ route('get_all_msg') }}",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    friendId: id,
+                    senderId: sid,
+                    videoId: vid,
+                    vownerid: vownerid
+                },
+                success: function(resp) {
+                    // ***List User Chat
+                    // console.log(resp);
+                    $('#chatModalClose').text(resp[0].name);
+                    $('#receiveID').val(id);
+                    $('#videoID').val(vid);
+                    $('#videoOwnerID').val(vownerid);
+                    $('#messageBody').html(resp[0].msg);
+                    $("#eachFriendChatModal").addClass('show').css('display', 'block');
+
+                    // ***Load Message Instant
+                    loadMsg(id, vid, vownerid);
+                    setInterval(function() {
+                        loadMsg(id, vid, vownerid);
+                    }, 15000);
+
+                    // Maintain message body function
+                    msgBodyMaintain();
+                }
+            })
+        });
+
+
         @auth
         //List All Frinds chat List
         setInterval(function() {
@@ -76,48 +120,6 @@
             })
         }
     @endauth
-
-    // Click On Friend Name || Receiver Name
-    $("body").on('click', '.chatM', function(e) {
-        e.preventDefault();
-
-        var id = $(this).data('rid');
-        var sid = $(this).data('sid');
-        var vid = $(this).data('vid');
-        var vownerid = $(this).data('vownerid');
-
-        $.ajax({
-            url: "{{ route('get_all_msg') }}",
-            type: "POST",
-            dataType: "json",
-            data: {
-                "_token": "{{ csrf_token() }}",
-                friendId: id,
-                senderId: sid,
-                videoId: vid,
-                vownerid: vownerid
-            },
-            success: function(resp) {
-                // ***List User Chat
-                // console.log(resp);
-                $('#chatModalClose').text(resp[0].name);
-                $('#receiveID').val(id);
-                $('#videoID').val(vid);
-                $('#videoOwnerID').val(vownerid);
-                $('#messageBody').html(resp[0].msg);
-                $("#eachFriendChatModal").addClass('show').css('display', 'block');
-
-                // ***Load Message Instant
-                loadMsg(id, vid, vownerid);
-                setInterval(function() {
-                    loadMsg(id, vid, vownerid);
-                }, 15000);
-
-                // Maintain message body function
-                msgBodyMaintain();
-            }
-        })
-    });
 
     // Message send and appear in the body
     $('body').on('submit', '#msgSendFrm', function(e) {
@@ -145,7 +147,7 @@
         });
     });
 
-    // Load Message Every 5 second
+    // Load Message Every 5 second for each friends
     function loadMsg(receiveID, videoID, videoOwnerID) {
         $.ajax({
             url: "{{ route('load_auth_user_msg') }}",
@@ -164,6 +166,12 @@
                 msgBodyMaintain();
             }
         })
+    }
+
+    // Main Message Body
+    function msgBodyMaintain() {
+        let messageBody = document.querySelector('#messageBody');
+        messageBody.scrollTop = messageBody.scrollHeight;
     }
 
     // Unseen msg count function call every 15sec
@@ -199,11 +207,6 @@
         });
     };
 
-    // Main Message Body
-    function msgBodyMaintain() {
-        let messageBody = document.querySelector('#messageBody');
-        messageBody.scrollTop = messageBody.scrollHeight;
-    }
 
     });
 </script>
