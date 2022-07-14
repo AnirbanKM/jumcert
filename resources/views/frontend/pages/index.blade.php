@@ -425,28 +425,6 @@
         </div>
     </div>
 
-    {{-- Modal for if User == Channel Owner --}}
-    <div class="modal fade" id="videoOwnerModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">
-                        This is a private video
-                    </h4>
-                    <button type="button" class="videoOwnerModalClose" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p class="text-center" style="margin-bottom: 15px;">
-                        You are the owner of the video,
-                        the go the Chat request section & view chat requests.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     @auth
         {{-- Modal for private videos sharing alert --}}
         <div class="modal fade" id="privateVideoSharemodal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -510,8 +488,6 @@
     <script>
         jQuery(document).ready(function($) {
 
-
-
             $('body').on('click', '.card_img', function(e) {
 
                 var id = $(this).data('id');
@@ -529,18 +505,6 @@
                 $('#privateModal').removeClass('show').css('display', 'none');
                 $('#privateVideoSharemodal').removeClass('show').css('display', 'none');
                 $('#publicVideoSharemodal').removeClass('show').css('display', 'none');
-            });
-
-            // Popup Modal for those who are the owner of the video
-            $('.videoOwner').click(function() {
-
-                $('#videoOwnerModal').addClass('show').css('display', 'block');
-            });
-
-            // Close videoOwner Modal
-            $(".videoOwnerModalClose").click(function(event) {
-
-                $('#videoOwnerModal').removeClass('show').css('display', 'none');
             });
 
             @auth

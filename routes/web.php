@@ -26,6 +26,7 @@ use App\Http\Controllers\Frontend\VideoUploadController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\LiveStreamController;
 use App\Http\Controllers\MyGalleryController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\PrivateStreamController;
 use App\Http\Controllers\PrivateVideoController;
 use App\Http\Controllers\StreamRecorderController;
@@ -321,3 +322,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin_gues
 
 // Test Controller
 Route::get('/test', [TestController::class, 'test'])->name('test');
+
+/**
+ * Password Reset Routes
+ * */
+Route::post('/send_reset_password_email', [PasswordResetController::class, 'send_reset_password_email'])->name('send_reset_password_email');
+Route::get('/reset/{token}', [PasswordResetController::class, 'reset'])->name('reset');
+Route::post('/reset_password', [PasswordResetController::class, 'reset_password'])->name('reset_password');

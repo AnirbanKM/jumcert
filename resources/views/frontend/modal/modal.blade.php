@@ -26,7 +26,7 @@
 
                     <input type="submit" value="Login to Jumcert">
 
-                    <a href="#" class="forgot-pass" href="#" data-toggle="modal" data-target="#smallModal3">
+                    <a href="javascript:;" class="forgot-pass" data-toggle="modal" data-target="#resetpass">
                         Forgot Password
                     </a>
                     <p class="log-bg">Or Login with</p>
@@ -82,8 +82,8 @@
                     </div>
                     <input type="submit" value="Register to Jumcert" id="regBtn">
 
-                    <a class="forgot-pass" href="#" data-toggle="modal" data-target="#smallModal3">Forgot
-                        Password
+                    <a href="javascript:;" class="forgot-pass" data-toggle="modal" data-target="#resetpass">
+                        Forgot Password
                     </a>
                     <p class="log-bg">Or Login with</p>
                     <a href="#" class="mod-btn fb-btn"> <img src="{{ asset('frontend/img/fb.png') }}"
@@ -106,6 +106,28 @@
     </div>
 </div>
 
+<!-- Reset Password -->
+<div class="modal fade" id="resetpass">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Reset Password</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span id="fg" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Enter your registered email address to get the security code to reset the password</p>
+                <form method="POST" id="resetpassform">
+                    @csrf
+                    <input type="text" name="email" placeholder="Email">
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     jQuery(document).ready(function($) {
 
@@ -120,21 +142,6 @@
             });
 
             jQuery(".forgot-pass").click(function() {
-                jQuery(".modal").removeClass("show");
-                $(".modal-backdrop").remove();
-                $("#smallModal").modal('hide');
-            });
-            jQuery(".reset-pass").click(function() {
-                jQuery(".modal").removeClass("show");
-                $(".modal-backdrop").remove();
-                $("#smallModal").modal('hide');
-            });
-            jQuery(".otp").click(function() {
-                jQuery(".modal").removeClass("show");
-                $(".modal-backdrop").remove();
-                $("#smallModal").modal('hide');
-            });
-            jQuery(".password-input").click(function() {
                 jQuery(".modal").removeClass("show");
                 $(".modal-backdrop").remove();
                 $("#smallModal").modal('hide');
@@ -338,73 +345,32 @@
             }
         });
 
+        $('body').on('submit', '#resetpassform', function(e) {
+            e.preventDefault();
+
+            var form = $("#resetpassform");
+
+            $.ajax({
+                url: "{{ route('send_reset_password_email') }}",
+                type: "POST",
+                data: form.serialize(),
+                dataType: "json",
+                success: function(resp) {
+                    console.log(resp);
+
+                    var msg = resp.msg;
+                    var status = resp.status;
+
+                    notification(msg, status);
+
+                    $("#resetpass").modal('hide');
+                }
+            });
+        }); 
+        
     });
 </script>
 
-<!-- Reset Password -->
-<div class="modal fade" id="smallModal3" tabindex="-1" role="dialog" aria-labelledby="basicModal"
-    aria-hidden="true">
-    <div class="modal-dialog ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Reset Password </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span id="fg" aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Enter your registered email address to get the security code to reset the password</p>
-                <form action="">
-                    <input type="email" placeholder="Email">
-                    <input type="submit" class="reset-pass" value="Submit" data-toggle="modal"
-                        data-target="#smallModal4">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
-<!-- enter otp -->
-<div class="modal fade" id="smallModal4>
-    <div class="modal-dialog ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">enter security code </h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>We have sent you a 6 digit security code in your
-                    registered email address.</p>
-                {{-- <form action=""> --}}
-                <input type="email" placeholder="Enter OTP">
-                <input type="submit" class="otp" value="Reset" data-toggle="modal" data-target="#smallModal5">
-                {{-- </form> --}}
-            </div>
 
-        </div>
-    </div>
-</div>
 
-<!-- Reset Password -->
-<div class="modal fade" id="smallModal5">
-    <div class="modal-dialog ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Reset Password</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Enter your new password and confirm the password for future refrence.</p>
-                <form action="">
-                    <input type="text" placeholder="New Password">
-                    <input type="text" placeholder="Confirm Password">
-                    <input class="password-input" type="submit" value="Confirm">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>

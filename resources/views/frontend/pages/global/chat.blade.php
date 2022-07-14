@@ -82,4 +82,26 @@
             </div>
         </div>
     </div>
+
+    {{-- Modal for if User == Channel Owner --}}
+    <div class="modal fade" id="videoOwnerModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">
+                        This is a private video
+                    </h4>
+                    <button type="button" class="videoOwnerModalClose" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center" style="margin-bottom: 15px;">
+                        You are the owner of the video,
+                        the go the Chat request section & view chat requests.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 @endauth

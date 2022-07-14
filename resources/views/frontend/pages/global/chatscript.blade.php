@@ -206,5 +206,18 @@
         };
     @endauth
 
+    // Popup Modal for those who are the owner of the video
+    $('.videoOwner').click(function() {
+
+        $('#videoOwnerModal').addClass('show').css('display', 'block');
+    });
+
+    // Close videoOwner Modal
+    $(".videoOwnerModalClose").click(function(event) {
+
+        $('#videoOwnerModal').removeClass('show').css('display', 'none');
+    });
+
+
     });
 </script>
