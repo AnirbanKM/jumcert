@@ -338,7 +338,7 @@
             }
         });
 
-    })
+    });
 </script>
 
 <!-- Reset Password -->
@@ -365,8 +365,7 @@
 </div>
 
 <!-- enter otp -->
-<div class="modal fade" id="smallModal4" tabindex="-1" role="dialog" aria-labelledby="basicModal"
-    aria-hidden="true">
+<div class="modal fade" id="smallModal4>
     <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
@@ -389,8 +388,7 @@
 </div>
 
 <!-- Reset Password -->
-<div class="modal fade" id="smallModal5" tabindex="-1" role="dialog" aria-labelledby="basicModal"
-    aria-hidden="true">
+<div class="modal fade" id="smallModal5">
     <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">

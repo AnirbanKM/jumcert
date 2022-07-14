@@ -45,19 +45,6 @@
             })
         })
 
-        // **** drop-profile ****
-        $('.drop-profile').hide();
-        $('.drop-profile .cross-here').click(function(event) {
-            $(this).parent('.drop-profile').slideToggle(300);
-        });
-        $('.dropdown-sec a').click(function(event) {
-            var slide_el = $(this).next('.drop-profile');
-            if (!slide_el.is(':visible')) {
-                $('.drop-profile').slideUp();
-            }
-            $(this).next('.drop-profile').slideToggle();
-        });
-
         // **** Get user profile image ****
         function usercheck() {
 
