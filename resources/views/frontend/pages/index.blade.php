@@ -386,45 +386,6 @@
 
     @include('frontend.inc.startsec')
 
-    {{-- Modal for purchase private videos --}}
-    <div class="modal fade" id="privateModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog ">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">
-                        This is a private video
-                    </h4>
-                    <button type="button" class="privateModalClose" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    @guest('web')
-                        <p class="text-center">
-                            Login to Jumcert account with your credentials
-                        </p>
-                        <button class="btn btn-primary" id="loginJumcertBtn" style="display: table;margin: 0 auto;">
-                            Login to Jumcert
-                        </button>
-                    @endguest
-
-                    @auth('web')
-                        <p class="text-center" style="margin-bottom: 15px;">
-                            This is a private video, you need to purchase this video
-                        </p>
-                        <form action="{{ route('private_video_cart') }}" method="POST">
-                            @csrf
-                            <input type="hidden" class="form-control" name="vId" id="vId" />
-                            <input type="submit" class="btn btn-primary" value="Purchase this video"
-                                style="display: table;margin: 0 auto;" />
-                        </form>
-                    @endauth
-
-                </div>
-            </div>
-        </div>
-    </div>
-
     {{-- Modal for if User == Channel Owner --}}
     <div class="modal fade" id="videoOwnerModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog ">
@@ -448,29 +409,6 @@
     </div>
 
     @auth
-        {{-- Modal for chat request with Channel Owner --}}
-        <div class="modal fade popup-modal" id="chatModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Chat box</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <form id="sendChatReq">
-                        @csrf
-                        <input type="hidden" id="vid" name="vid" />
-                        <div class="chat-box__input">
-                            <input type="text" name="msg" placeholder="send message" />
-                            <input type="submit"
-                                style="background-image: url({{ asset('frontend/img/chatreq.svg') }}); font-size: 0;">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
         {{-- Modal for private videos sharing alert --}}
         <div class="modal fade" id="privateVideoSharemodal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog ">
@@ -561,44 +499,6 @@
                 $('#privateModal').removeClass('show').css('display', 'none');
                 $('#privateVideoSharemodal').removeClass('show').css('display', 'none');
                 $('#publicVideoSharemodal').removeClass('show').css('display', 'none');
-            });
-
-            $('body').on('click', '.eachReqModal', function(e) {
-                var vid = $(this).data('vid');
-                $('#vid').val(vid);
-                $("#chatModal").addClass('show').css('display', 'block');
-            });
-
-            // Send chat request to the channel owner
-            $('body').on('submit', '#sendChatReq', function(e) {
-                e.preventDefault();
-
-                var form = $("#sendChatReq");
-
-                $.ajax({
-                    url: "{{ route('send_chat_req') }}",
-                    type: "POST",
-                    dataType: "json",
-                    data: form.serialize(),
-                    success: function(resp) {
-                        // console.log(resp);
-                        if (resp.status == 'error') {
-                            $("#sendChatReq")[0].reset();
-                            $("#chatModal").removeClass('show').css('display', 'none');
-
-                            var statusparam = resp.status;
-                            var msgparam = resp.msg;
-                            notification(msgparam, statusparam)
-                        } else {
-                            $("#chatModal").removeClass('show').css('display', 'none');
-                            $("#sendChatReq")[0].reset();
-
-                            var statusparam = resp.status;
-                            var msgparam = resp.msg;
-                            notification(msgparam, statusparam)
-                        }
-                    }
-                });
             });
 
             // Popup login Modal

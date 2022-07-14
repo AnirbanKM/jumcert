@@ -18,6 +18,45 @@
     </div>
 @endauth
 
+{{-- Modal for purchase private videos --}}
+<div class="modal fade" id="privateModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">
+                    This is a private video
+                </h4>
+                <button type="button" class="privateModalClose" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @guest('web')
+                    <p class="text-center">
+                        Login to Jumcert account with your credentials
+                    </p>
+                    <button class="btn btn-primary" id="loginJumcertBtn" style="display: table;margin: 0 auto;">
+                        Login to Jumcert
+                    </button>
+                @endguest
+
+                @auth('web')
+                    <p class="text-center" style="margin-bottom: 15px;">
+                        This is a private video, you need to purchase this video
+                    </p>
+                    <form action="{{ route('private_video_cart') }}" method="POST">
+                        @csrf
+                        <input type="hidden" class="form-control" name="vId" id="vId" />
+                        <input type="submit" class="btn btn-primary" value="Purchase this video"
+                            style="display: table;margin: 0 auto;" />
+                    </form>
+                @endauth
+
+            </div>
+        </div>
+    </div>
+</div>
+
 {{-- Modal for 1:Many Chatting Users->Channel && Channel->Users --}}
 <div class="modal user-chat" id="eachFriendChatModal" tabindex="-1" role="dialog" aria-modal="true">
 
@@ -58,3 +97,28 @@
         </div>
     </div>
 </div>
+
+@auth
+    {{-- Modal for chat request with Channel Owner --}}
+    <div class="modal fade popup-modal" id="chatModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Chat box</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form id="sendChatReq">
+                    @csrf
+                    <input type="hidden" id="vid" name="vid" />
+                    <div class="chat-box__input">
+                        <input type="text" name="msg" placeholder="send message" />
+                        <input type="submit"
+                            style="background-image: url({{ asset('frontend/img/chatreq.svg') }}); font-size: 0;" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+@endauth
