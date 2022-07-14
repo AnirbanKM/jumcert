@@ -386,6 +386,45 @@
 
     @include('frontend.inc.startsec')
 
+    {{-- Modal for purchase private videos --}}
+    <div class="modal fade" id="privateModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">
+                        This is a private video
+                    </h4>
+                    <button type="button" class="privateModalClose" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    @guest('web')
+                        <p class="text-center">
+                            Login to Jumcert account with your credentials
+                        </p>
+                        <button class="btn btn-primary" id="loginJumcertBtn" style="display: table;margin: 0 auto;">
+                            Login to Jumcert
+                        </button>
+                    @endguest
+
+                    @auth('web')
+                        <p class="text-center" style="margin-bottom: 15px;">
+                            This is a private video, you need to purchase this video
+                        </p>
+                        <form action="{{ route('private_video_cart') }}" method="POST">
+                            @csrf
+                            <input type="hidden" class="form-control" name="vId" id="vId" />
+                            <input type="submit" class="btn btn-primary" value="Purchase this video"
+                                style="display: table;margin: 0 auto;" />
+                        </form>
+                    @endauth
+
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- Modal for if User == Channel Owner --}}
     <div class="modal fade" id="videoOwnerModal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog ">
@@ -471,16 +510,7 @@
     <script>
         jQuery(document).ready(function($) {
 
-            function notification(resp, status) {
-                new Noty({
-                    theme: 'sunset',
-                    type: status,
-                    layout: 'topRight',
-                    text: resp,
-                    timeout: 3000,
-                    closeWith: ['click', 'button']
-                }).show();
-            }
+
 
             $('body').on('click', '.card_img', function(e) {
 
@@ -499,12 +529,6 @@
                 $('#privateModal').removeClass('show').css('display', 'none');
                 $('#privateVideoSharemodal').removeClass('show').css('display', 'none');
                 $('#publicVideoSharemodal').removeClass('show').css('display', 'none');
-            });
-
-            // Popup login Modal
-            $('.showLogin').click(function() {
-
-                $('#privateModal').addClass('show').css('display', 'block');
             });
 
             // Popup Modal for those who are the owner of the video

@@ -159,6 +159,29 @@
                                                 @endguest
                                             </li>
 
+                                            {{-- Chat --}}
+                                            <li>
+                                                @auth
+                                                    @if ($video->user_id == Auth::user()->id)
+                                                        <a href="javascript:void(0)" class="videoOwner"
+                                                            data-vid="{{ $video->id }}">
+                                                            <i class="fas fa-comment-dots"></i>
+                                                        </a>
+                                                    @else
+                                                        <a href="javascript:void(0)" class="eachReqModal"
+                                                            data-vid="{{ $video->id }}">
+                                                            <i class="fas fa-comment-dots"></i>
+                                                        </a>
+                                                    @endif
+                                                @endauth
+
+                                                @guest
+                                                    <a href="javascript:void(0)" class="showLogin">
+                                                        <i class="fas fa-comment-dots"></i>
+                                                    </a>
+                                                @endguest
+                                            </li>
+
                                             {{-- Share video link --}}
                                             <li>
                                                 @auth
@@ -298,6 +321,7 @@
 @section('frontendJs')
     <script>
         jQuery(document).ready(function($) {
+
             $('body').on('click', '.card_img', function(e) {
                 var id = $(this).data('id');
                 $('#vId').val(id);
@@ -313,6 +337,13 @@
                 $('#privateModal').removeClass('show').css('display', 'none');
                 $('#publicVideoSharemodal').removeClass('show').css('display', 'none');
                 $('#privateVideoSharemodal').removeClass('show').css('display', 'none');
+            });
+
+            $('body').on('click', '.eachReqModal', function(e) {
+
+                var vid = $(this).data('vid');
+                $('#vid').val(vid);
+                $("#chatModal").addClass('show').css('display', 'block');
             });
 
             @auth
