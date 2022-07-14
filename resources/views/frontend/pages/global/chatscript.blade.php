@@ -12,12 +12,13 @@
             }).show();
         }
 
+        @auth
+
         // Popup login Modal
         $('.showLogin').click(function() {
 
             $('#privateModal').addClass('show').css('display', 'block');
         });
-
 
         $('body').on('click', '.eachReqModal', function(e) {
 
@@ -100,8 +101,6 @@
             })
         });
 
-
-        @auth
         //List All Frinds chat List
         setInterval(function() {
             getFrindsList()
@@ -119,94 +118,93 @@
                 }
             })
         }
-    @endauth
 
-    // Message send and appear in the body
-    $('body').on('submit', '#msgSendFrm', function(e) {
-        e.preventDefault();
+        // Message send and appear in the body
+        $('body').on('submit', '#msgSendFrm', function(e) {
+            e.preventDefault();
 
-        var form = $("#msgSendFrm");
+            var form = $("#msgSendFrm");
 
-        var receiveID = $('#receiveID').val();
-        var videoID = $('#videoID').val();
-        var videoOwnerID = $('#videoOwnerID').val();
-
-        $.ajax({
-            url: "{{ route('ins_chat_msg') }}",
-            type: "POST",
-            data: form.serialize(),
-            dataType: "json",
-            success: function(resp) {
-                // console.log(resp);
-                $("#msgSendFrm")[0].reset()
-                $("#messageBody").append(resp.msg);
-
-                // Maintain message body function
-                msgBodyMaintain();
-            }
-        });
-    });
-
-    // Load Message Every 5 second for each friends
-    function loadMsg(receiveID, videoID, videoOwnerID) {
-        $.ajax({
-            url: "{{ route('load_auth_user_msg') }}",
-            type: "GET",
-            dataType: "json",
-            data: {
-                receiveID: receiveID,
-                videoID: videoID,
-                videoOwnerID: videoOwnerID
-            },
-            success: function(resp) {
-                // console.log(resp);
-                $('#messageBody').html(resp[0].msg);
-
-                // Maintain message body function
-                msgBodyMaintain();
-            }
-        })
-    }
-
-    // Main Message Body
-    function msgBodyMaintain() {
-        let messageBody = document.querySelector('#messageBody');
-        messageBody.scrollTop = messageBody.scrollHeight;
-    }
-
-    // Unseen msg count function call every 15sec
-    setInterval(function() {
-        unseenCountFun();
-    }, 10000);
-
-    // Unseen msg count function call just one time
-    setTimeout(function() {
-        unseenCountFun();
-    }, 6000);
-
-    // Unseen msg count function
-    function unseenCountFun() {
-        $(".unseen").each(function(index) {
-
-            var idTag = $(this).attr('id');
-            var chatId = idTag.slice(6, 12);
+            var receiveID = $('#receiveID').val();
+            var videoID = $('#videoID').val();
+            var videoOwnerID = $('#videoOwnerID').val();
 
             $.ajax({
-                url: "{{ route('unseen_count') }}",
+                url: "{{ route('ins_chat_msg') }}",
                 type: "POST",
+                data: form.serialize(),
+                dataType: "json",
+                success: function(resp) {
+                    // console.log(resp);
+                    $("#msgSendFrm")[0].reset()
+                    $("#messageBody").append(resp.msg);
+
+                    // Maintain message body function
+                    msgBodyMaintain();
+                }
+            });
+        });
+
+        // Load Message Every 5 second for each friends
+        function loadMsg(receiveID, videoID, videoOwnerID) {
+            $.ajax({
+                url: "{{ route('load_auth_user_msg') }}",
+                type: "GET",
                 dataType: "json",
                 data: {
-                    "_token": "{{ csrf_token() }}",
-                    id: chatId,
+                    receiveID: receiveID,
+                    videoID: videoID,
+                    videoOwnerID: videoOwnerID
                 },
                 success: function(resp) {
                     // console.log(resp);
-                    $("#unseen" + chatId).text(resp);
+                    $('#messageBody').html(resp[0].msg);
+
+                    // Maintain message body function
+                    msgBodyMaintain();
                 }
             })
-        });
-    };
+        }
 
+        // Main Message Body
+        function msgBodyMaintain() {
+            let messageBody = document.querySelector('#messageBody');
+            messageBody.scrollTop = messageBody.scrollHeight;
+        }
+
+        // Unseen msg count function call every 15sec
+        setInterval(function() {
+            unseenCountFun();
+        }, 10000);
+
+        // Unseen msg count function call just one time
+        setTimeout(function() {
+            unseenCountFun();
+        }, 6000);
+
+        // Unseen msg count function
+        function unseenCountFun() {
+            $(".unseen").each(function(index) {
+
+                var idTag = $(this).attr('id');
+                var chatId = idTag.slice(6, 12);
+
+                $.ajax({
+                    url: "{{ route('unseen_count') }}",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        id: chatId,
+                    },
+                    success: function(resp) {
+                        // console.log(resp);
+                        $("#unseen" + chatId).text(resp);
+                    }
+                })
+            });
+        };
+    @endauth
 
     });
 </script>

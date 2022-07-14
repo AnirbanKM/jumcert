@@ -52,7 +52,6 @@ class SupportController extends Controller
             return redirect()->route('supports')->with('success', 'Your feedback successfully send to the jumcert');
         } catch (\Throwable $th) {
             return redirect()->route('supports')->with('error', 'Something went wrong please try again');
-            // throw $th;
         }
     }
 }
