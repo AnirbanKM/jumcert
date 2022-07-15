@@ -12,13 +12,13 @@
             }).show();
         }
 
-        @auth
-
         // Popup login Modal
         $('.showLogin').click(function() {
 
             $('#privateModal').addClass('show').css('display', 'block');
         });
+
+        @auth
 
         $('body').on('click', '.eachReqModal', function(e) {
 
