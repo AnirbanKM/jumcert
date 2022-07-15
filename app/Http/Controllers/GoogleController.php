@@ -32,7 +32,7 @@ class GoogleController extends Controller
 
             Auth::login($user);
 
-            return redirect()->route('home')->with('success', 'successfully logged in with Google');
+            return redirect()->route('home')->with('success', 'successfully logged in with facebook');
         } catch (\Throwable $th) {
             return redirect()->route('home')->with('error', 'something went wrong, please try again later');
         }
