@@ -13,9 +13,10 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.0",
+        "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.0",
-        "stripe/stripe-php": "^7.123",
-        "league/flysystem-aws-s3-v3": "1.0.29"
+        "league/flysystem-aws-s3-v3": "1.0.29",
+        "stripe/stripe-php": "^7.123"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

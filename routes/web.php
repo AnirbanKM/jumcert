@@ -7,6 +7,7 @@ use App\Http\Controllers\Backend\AdminVideoController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\LoginController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\ChannelController;
 use App\Http\Controllers\Frontend\ConnectionsController;
@@ -329,3 +330,9 @@ Route::get('/test', [TestController::class, 'test'])->name('test');
 Route::post('/send_reset_password_email', [PasswordResetController::class, 'send_reset_password_email'])->name('send_reset_password_email');
 Route::get('/reset/{token}', [PasswordResetController::class, 'reset'])->name('reset');
 Route::post('/reset_password', [PasswordResetController::class, 'reset_password'])->name('reset_password');
+
+/**
+ * Facebook Login Routes
+ */
+Route::get('/facebook_submit', [FacebookController::class, 'facebook_submit'])->name('facebook_submit');
+Route::get('/facebook_callback', [FacebookController::class, 'facebook_callback'])->name('facebook_callback');

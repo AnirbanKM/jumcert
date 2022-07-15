@@ -30,8 +30,8 @@
                         Forgot Password
                     </a>
                     <p class="log-bg">Or Login with</p>
-                    <a href="#" class="mod-btn fb-btn"> <img src="{{ asset('frontend/img/fb.png') }}"
-                            alt="">
+                    <a href="{{ route('facebook_submit') }}" class="mod-btn fb-btn"> <img
+                            src="{{ asset('frontend/img/fb.png') }}" alt="">
                         Sign In with Facebook
                     </a>
                     <a href="#" class="mod-btn ggl-btn"><img src="{{ asset('frontend/img/google.png') }}"
@@ -366,11 +366,7 @@
                     $("#resetpass").modal('hide');
                 }
             });
-        }); 
-        
+        });
+
     });
 </script>
-
-
-
-
