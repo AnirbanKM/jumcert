@@ -34,8 +34,8 @@
                             src="{{ asset('frontend/img/fb.png') }}" alt="">
                         Sign In with Facebook
                     </a>
-                    <a href="#" class="mod-btn ggl-btn"><img src="{{ asset('frontend/img/google.png') }}"
-                            alt="">
+                    <a href="{{ route('google_submit') }}" class="mod-btn ggl-btn"><img
+                            src="{{ asset('frontend/img/google.png') }}" alt="">
                         Sign In with Google</a>
                     <p class="reg-link">Don’t have an account?
                         <a href="" data-toggle="modal" data-target="#smallModal2">Register</a>

@@ -25,6 +25,7 @@ use App\Http\Controllers\Frontend\SupportController;
 use App\Http\Controllers\Frontend\VideosController;
 use App\Http\Controllers\Frontend\VideoUploadController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\LiveStreamController;
 use App\Http\Controllers\MyGalleryController;
 use App\Http\Controllers\PasswordResetController;
@@ -336,3 +337,9 @@ Route::post('/reset_password', [PasswordResetController::class, 'reset_password'
  */
 Route::get('/facebook_submit', [FacebookController::class, 'facebook_submit'])->name('facebook_submit');
 Route::get('/facebook_callback', [FacebookController::class, 'facebook_callback'])->name('facebook_callback');
+
+/**
+ * Google Login Routes
+ */
+Route::get('/google_submit', [GoogleController::class, 'google_submit'])->name('google_submit');
+Route::get('/google_resp', [GoogleController::class, 'google_callback'])->name('google_callback');
