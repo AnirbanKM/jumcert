@@ -200,15 +200,12 @@ Route::group(['middleware' => ['auth', 'role:1,2']], function () {
         Route::post('channel_update', [ChannelController::class, 'update'])->name('channel_update');
         Route::post('channel_playlist_create', [ChannelController::class, 'channel_playlist_create'])->name('channel_playlist_create');
 
-        // check If user not created Account then Active Middleware
-        Route::group(['middleware' => ['check_if_user_created_account']], function () {
-            // Video upload
-            Route::get('/video_upload', [VideoUploadController::class, 'index'])->name('video_upload');
-            Route::post('/video_upload_ins', [VideoUploadController::class, 'video_upload_ins'])->name('video_upload_ins');
-            Route::get('/video_edit_frm', [VideoUploadController::class, 'video_edit_frm'])->name('video_edit_frm');
-            Route::get('/find_video', [VideoUploadController::class, 'find_video'])->name('find_video');
-            Route::post('/update_video', [VideoUploadController::class, 'update_video'])->name('update_video');
-        });
+        // Video upload
+        Route::get('/video_upload', [VideoUploadController::class, 'index'])->name('video_upload');
+        Route::post('/video_upload_ins', [VideoUploadController::class, 'video_upload_ins'])->name('video_upload_ins');
+        Route::get('/video_edit_frm', [VideoUploadController::class, 'video_edit_frm'])->name('video_edit_frm');
+        Route::get('/find_video', [VideoUploadController::class, 'find_video'])->name('find_video');
+        Route::post('/update_video', [VideoUploadController::class, 'update_video'])->name('update_video');
 
         // Playlist
         Route::get('/playlist', [PlayListController::class, 'index'])->name('playlist');
@@ -225,30 +222,26 @@ Route::group(['middleware' => ['auth', 'role:1,2']], function () {
         // ***Live stream single player
         Route::get('/stream_player', [StreamPlayerController::class, 'index'])->name('stream_player');
 
-        // check If user not created Account then Active Middleware
-        Route::group(['middleware' => ['check_if_user_created_account']], function () {
+        // ***Live Stream Create
+        Route::post('/live_stream_create', [LiveStreamController::class, 'create'])->name('live_stream_create');
 
-            // ***Live Stream Create
-            Route::post('/live_stream_create', [LiveStreamController::class, 'create'])->name('live_stream_create');
+        // ***Live Stream status update by host side Cancel || Pending
+        Route::get('/stream_status', [StreamController::class, 'stream_status'])->name('stream_status');
 
-            // ***Live Stream status update by host side Cancel || Pending
-            Route::get('/stream_status', [StreamController::class, 'stream_status'])->name('stream_status');
+        // ***Live Stream Edit Modal Popup and fetch single data
+        Route::get('/stream_edit', [StreamController::class, 'stream_edit'])->name('stream_edit');
 
-            // ***Live Stream Edit Modal Popup and fetch single data
-            Route::get('/stream_edit', [StreamController::class, 'stream_edit'])->name('stream_edit');
+        // ***Live Stream update record
+        Route::post('/stream_update', [StreamController::class, 'stream_update'])->name('stream_update');
 
-            // ***Live Stream update record
-            Route::post('/stream_update', [StreamController::class, 'stream_update'])->name('stream_update');
+        // ***Live Stream Join as a host
+        Route::post('/channel/{channelSlug}/join_as_host', [StreamController::class, 'join_as_host'])->name('join_as_host');
 
-            // ***Live Stream Join as a host
-            Route::post('/channel/{channelSlug}/join_as_host', [StreamController::class, 'join_as_host'])->name('join_as_host');
+        // ***Update Stream token based on stream Id
+        Route::post('/stream_token_update', [StreamController::class, 'streamTokenUpd'])->name('stream_token_update');
 
-            // ***Update Stream token based on stream Id
-            Route::post('/stream_token_update', [StreamController::class, 'streamTokenUpd'])->name('stream_token_update');
-
-            // Live Stream viewers create
-            Route::post('/stream_record_create', [StreamController::class, 'stream_record_create'])->name('stream_record_create');
-        });
+        // Live Stream viewers create
+        Route::post('/stream_record_create', [StreamController::class, 'stream_record_create'])->name('stream_record_create');
     });
 });
 
