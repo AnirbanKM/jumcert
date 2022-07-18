@@ -77,7 +77,7 @@ class VideoUploadController extends Controller
             if ($checkImage == true) {
                 $file = $r->file('video');
                 $videoName = time() . $file->getClientOriginalName();
-                $filename = pathinfo($videoName, PATHINFO_FILENAME) . rand(100000, 999999) . '.' . $extension; // Add encoding
+                $filename = pathinfo($videoName, PATHINFO_FILENAME) . rand(100000, 999999) . '.' . $extension;
                 $path = $file->storeAs('jumcert', $filename, 's3');  // Video store in Amazon S3
                 $videoLink = "https://jumcertstorage.s3.us-east-1.amazonaws.com/" . $path;
             } else {
@@ -85,8 +85,7 @@ class VideoUploadController extends Controller
                 return redirect()->back();
             }
         } else {
-            session()->flash('success', 'Please select a valid video format');
-            return redirect()->back();
+            $videoLink = Null;
         }
 
         // Core validation & upload image file in Amazon S3

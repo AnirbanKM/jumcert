@@ -15,12 +15,17 @@
                         {{-- watch video main start --}}
                         <div class="right-works-section2 row">
                             <div class="col-md-12">
-                                <div class="embed-responsive embed-responsive-16by9">
-                                    <video controls>
-                                        <source src="{{ $video->videoname }}" type="video/webm">
-                                        <source src="{{ $video->videoname }}" type="video/mp4">
-                                    </video>
-                                </div>
+
+                                @if ($video->videoname != null)
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <video controls>
+                                            <source src="{{ $video->videoname }}" type="video/webm">
+                                            <source src="{{ $video->videoname }}" type="video/mp4">
+                                        </video>
+                                    </div>
+                                @else
+                                    <img src="{{ $video->thumbnail }}" alt="" width="100%" />
+                                @endif
 
                                 <div class="video_info">
                                     <h3>
@@ -40,7 +45,7 @@
                         </div>
                     @else
                         <h1 class="text-uppercase text-warning">
-                            This private video not found. 
+                            This private video not found.
                         </h1>
                     @endif
 

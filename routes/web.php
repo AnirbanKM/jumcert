@@ -342,4 +342,4 @@ Route::get('/google_resp', [GoogleController::class, 'google_callback'])->name('
 
 // changes need in db
 // user account table need to add new column account_number
-// video upload table need to change videoname column attributes yo Null
+// video upload table need to change videoname column attributes to Null
