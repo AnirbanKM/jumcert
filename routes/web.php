@@ -186,6 +186,8 @@ Route::group(['middleware' => ['auth', 'role:1,2']], function () {
     Route::get('/user_account', [UserAccountController::class, 'index'])->name('user_account');
     Route::post('/create_payment_info', [UserAccountController::class, 'create_payment_info'])->name('create_payment_info');
     Route::post('/del_payment_info', [UserAccountController::class, 'del_payment_info'])->name('del_payment_info');
+    Route::post('/edit_payment_info', [UserAccountController::class, 'edit_payment_info'])->name('edit_payment_info');
+    Route::post('/update_payment_info', [UserAccountController::class, 'update_payment_info'])->name('update_payment_info');
 
     // User Wallet Info Routes
     // Route::get('/user_wallet', [WalletController::class, 'user_wallet'])->name('user_wallet');

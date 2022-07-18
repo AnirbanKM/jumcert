@@ -25,6 +25,7 @@ class UserAccount extends Model
         'fingerprint',
         'last4',
         'routing_number',
+        'account_number',
         'status',
         'client_ip',
         'created',
@@ -35,6 +36,6 @@ class UserAccount extends Model
 
     public function account()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }
