@@ -411,6 +411,72 @@ Pagination CSS
 
 /*
 =============================
-Preloader CSS
+User account null alert CSS
 =============================
 */
+.user-account-alert-modal {
+    position: absolute;
+    top: 0px;
+    z-index: 3;
+    right: 0;
+    background: #ffd6b4;
+    padding: 22px 20px;
+    display: flex;
+    transform: scale(0);
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+    transform-origin: top;
+  }
+  .user-account-alert-modal::after {
+    content: '';
+    background-color: #ff7f11;
+    height: 100%;
+    width: 5px;
+    left: 0;
+    top: 0;
+    position: absolute;
+  }
+  .user-account-alert-modal h5 {
+    color: #ff7f11;
+    font-size: 16px;
+    line-height: 23px;
+    max-width: 80%;
+    margin-inline: auto;
+  }
+  .user-account-alert-modal img {
+    height: 40px;
+    filter: drop-shadow(0px 4px 4px #ccc);
+  }
+  .close2 {
+    position: absolute;
+    right: 11px;
+    top: 5px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.7;
+    transform: scale(0.7);
+  }
+  .close2:hover {
+    opacity: 1;
+  }
+  .close2:before,
+  .close2:after {
+    position: absolute;
+    left: 15px;
+    content: ' ';
+    height: 33px;
+    width: 2px;
+    background-color: #ff7f11;
+  }
+  .close2:before {
+    transform: rotate(45deg);
+  }
+  .close2:after {
+    transform: rotate(-45deg);
+  }
+
+  .show {
+    transform: scale(1);
+    transition: all 0.5s ease-in-out;
+    opacity: 1;
+  }
