@@ -338,8 +338,3 @@ Route::get('/facebook_callback', [FacebookController::class, 'facebook_callback'
  */
 Route::get('/google_submit', [GoogleController::class, 'google_submit'])->name('google_submit');
 Route::get('/google_resp', [GoogleController::class, 'google_callback'])->name('google_callback');
-
-
-// changes need in db
-// user account table need to add new column account_number
-// video upload table need to change videoname column attributes to Null
