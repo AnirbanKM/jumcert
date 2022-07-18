@@ -91,7 +91,11 @@
         @if (Auth::user()->userAccount == null)
             <div class="user-account-alert-modal show" data-signup-modal>
                 <img src="https://jumcart.previewforclient.com/frontend/img/t-alert-con.svg" alt="" />
-                <h5> You need to sign up before going further</h5>
+                <h5>
+                    <a href="{{ route('user_account') }}">
+                        You need to sign up before going further
+                    </a>
+                </h5>
                 <span class="close2" data-close></span>
             </div>
             <script>
