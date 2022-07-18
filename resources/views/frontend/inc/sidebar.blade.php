@@ -40,6 +40,11 @@
                 Upload Videos
             </a>
         @endif
+
+        <a href="https://dashboard.stripe.com/login" class="common_btn" target="_blank">
+            <img src="{{ asset('frontend/img/icon/9.png') }}" alt="" />
+            Create Stipe Account
+        </a>
     @endauth
 
     <a href="{{ route('supports') }}" class="common_btn {{ request()->is('supports') ? 'active' : '' }}">
