@@ -49,7 +49,7 @@ class VideoUploadController extends Controller
         }
 
         $this->validate($r, [
-            'video' => 'required|mimes:mp4,mkv,avi,wmv|max:102400',
+            'video' => 'mimes:mp4,mkv,avi,wmv|max:102400',
             'thumbnail' => 'required|mimes:jpeg,jpg,png|max:2048',
 
             'title' => 'required',

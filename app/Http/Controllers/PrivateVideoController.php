@@ -20,33 +20,37 @@ class PrivateVideoController extends Controller
             ->where('video_uploads.id', $vid)
             ->first();
 
-        // get video info
-        $vname = $query->title;
-        $price =  $query->price;
+        if ($query != null) {
+            // get video info
+            $vname = $query->title;
+            $price =  $query->price;
 
-        // Enter Your Stripe Secret
-        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+            // Enter Your Stripe Secret
+            \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
 
-        $amount = $price;
-        $amount *= 100;
-        $amount = (int) $amount;
+            $amount = $price;
+            $amount *= 100;
+            $amount = (int) $amount;
 
-        $payment_intent = \Stripe\PaymentIntent::create([
-            'description' => 'Stripe Live Payment',
-            'amount' => $amount,
-            'currency' => 'USD',
-            'description' => 'Payment from Jumcert',
-            'payment_method_types' => ['card'],
-            'transfer_group' => 'ORDER100',
-        ]);
-        $intent = $payment_intent->client_secret;
+            $payment_intent = \Stripe\PaymentIntent::create([
+                'description' => 'Stripe Live Payment',
+                'amount' => $amount,
+                'currency' => 'USD',
+                'description' => 'Payment from Jumcert',
+                'payment_method_types' => ['card'],
+                'transfer_group' => 'ORDER100',
+            ]);
+            $intent = $payment_intent->client_secret;
 
-        return view('frontend.pages.payment.private_video_checkout', [
-            'intent' => $intent,
-            'vname' => $vname,
-            'videoId' => $vid,
-            'price' => $price,
-        ]);
+            return view('frontend.pages.payment.private_video_checkout', [
+                'intent' => $intent,
+                'vname' => $vname,
+                'videoId' => $vid,
+                'price' => $price,
+            ]);
+        } else {
+            return redirect()->route('home')->with('error', 'video is currently not available for purchase.');
+        }
     }
 
     public function private_payment_process(Request $r)
