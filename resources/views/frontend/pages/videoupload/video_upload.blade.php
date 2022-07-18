@@ -55,7 +55,7 @@
                                         <div class="icon-upload">
                                             <img src="{{ asset('frontend/img/upload.png') }}" alt="">
                                         </div>
-                                        <h4>video thumbnail upload</h4>
+                                        <h4>Image upload</h4>
                                         <input type="file" class="custom-file-input" name="thumbnail" />
                                         @error('thumbnail')
                                             <span class="err">{{ $message }}</span>

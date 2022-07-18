@@ -162,12 +162,6 @@
                                 @endif
 
                                 {{-- Other Route --}}
-                                <li>
-                                    <div class="icon">
-                                        <img src="{{ asset('frontend/img/drop-3.png') }}" alt="">
-                                    </div>
-                                    <a href="#">Help and Support</a>
-                                </li>
 
                                 {{-- Logout --}}
                                 <li>
