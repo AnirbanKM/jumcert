@@ -47,8 +47,7 @@ class UserAccountController extends Controller
 
         try {
 
-            $stripeResp = Http::asForm()
-                ->withToken(env('STRIPE_SECRET'))
+            $stripeResp = Http::asForm()->withToken(env('STRIPE_SECRET'))
                 ->post('https://api.stripe.com/v1/tokens', [
                     'bank_account' =>
                     [

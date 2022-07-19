@@ -9,10 +9,10 @@
 </head>
 
 <body>
-    <h1>This is ninja nunu hishu</h1>
-    <p> Name: {{ $name }} </p>
-    <p> Email: {{ $email }} </p>
-    <p> Comment: {{ $comment }} </p>
+    <h1>User Feedback</h1>
+    <p> Name: {{ $details['name'] }} </p>
+    <p> Email: {{ $details['email'] }} </p>
+    <p> Comment: {{ $details['comment'] }} </p>
 </body>
 
 </html>

@@ -32,14 +32,13 @@ class SupportController extends Controller
         $msg = $r->msg;
 
         try {
-            $mail = Mail::send(
-                'email.feedback',
-                ['name' => $name, 'email' =>  $email, 'comment' =>  $msg],
-                function ($message) use ($name, $email) {
-                    $message->from('anirbanshow@kreativemachinez.net');
-                    $message->to($email, $name)->subject('Your Website Contact Form');
-                }
-            );
+            $details = [
+                'name' =>  $name,
+                'email' => $email,
+                'comment' => $msg
+            ];
+
+            Mail::to('anirbanshow.dey12@gmail.com')->send(new \App\Mail\SupportMail($details));
 
             $obj = new Support();
             $obj->name = $name;
@@ -51,6 +50,7 @@ class SupportController extends Controller
 
             return redirect()->route('supports')->with('success', 'Your feedback successfully send to the jumcert');
         } catch (\Throwable $th) {
+            dd($th);
             return redirect()->route('supports')->with('error', 'Something went wrong please try again');
         }
     }
