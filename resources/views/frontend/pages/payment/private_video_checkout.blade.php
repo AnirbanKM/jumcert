@@ -187,13 +187,13 @@
                             },
                             dataType: "json",
                             success: function(resp) {
-                                console.log(resp);
-                                // if (resp.status === 200) {
-                                //     window.location.href = "{{ route('video_payment_success') }}";
-                                // } else {
-                                //     alert("Something went wrong");
-                                //     window.location.href = "{{ route('home') }}";
-                                // }
+                                // console.log(resp);
+                                if (resp.status === 200) {
+                                    window.location.href = "{{ route('video_payment_success') }}";
+                                } else {
+                                    alert("Something went wrong");
+                                    window.location.href = "{{ route('home') }}";
+                                }
                             }
                         });
                     }

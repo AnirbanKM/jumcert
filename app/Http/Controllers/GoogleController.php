@@ -21,10 +21,10 @@ class GoogleController extends Controller
             $googleUser = Socialite::driver('google')->user();
 
             $user = User::updateOrCreate([
-                'google_id' => $googleUser->id,
-            ], [
-                'name' => $googleUser->name,
                 'email' => $googleUser->email,
+            ], [
+                'google_id' => $googleUser->id,
+                'name' => $googleUser->name,
                 'user_role' => 0,
                 'password' => Hash::make($googleUser->getName() . '@' . $googleUser->getId()),
                 'google_token' => $googleUser->token
@@ -34,6 +34,7 @@ class GoogleController extends Controller
 
             return redirect()->route('home')->with('success', 'successfully logged in with facebook');
         } catch (\Throwable $th) {
+            dd($th);
             return redirect()->route('home')->with('error', 'something went wrong, please try again later');
         }
     }

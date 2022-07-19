@@ -113,7 +113,6 @@ class PrivateVideoController extends Controller
                         'destination' => $user_bank_account_id,
                     ]
                 );
-            dd($response);
 
             // Create Record for private video
             $obj = new PrivateVideo();
