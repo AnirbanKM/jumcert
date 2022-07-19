@@ -118,7 +118,7 @@
             </div>
             <div class="modal-body">
                 <p>Enter your registered email address to get the security code to reset the password</p>
-                <form method="POST" id="resetpassform">
+                <form method="GET" id="resetpassform">
                     @csrf
                     <input type="text" name="email" placeholder="Email">
                     <input type="submit" value="Submit">
@@ -352,7 +352,7 @@
 
             $.ajax({
                 url: "{{ route('send_reset_password_email') }}",
-                type: "POST",
+                type: "GET",
                 data: form.serialize(),
                 dataType: "json",
                 success: function(resp) {
