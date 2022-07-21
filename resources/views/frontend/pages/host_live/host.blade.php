@@ -67,7 +67,6 @@
     <script src="{{ asset('liveStream') }}/basicLive.js"></script>
 
     <script>
-
         function streamTokenUpdate(streamId, streamToken) {
             $.ajax({
                 url: "{{ route('stream_token_update') }}",
@@ -92,5 +91,3 @@
         });
     </script>
 @endsection
-
-

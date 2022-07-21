@@ -18,7 +18,7 @@ class StreamController extends Controller
             ->where('status', 'Pending')
             ->with('channel', 'user_purchased_video', 'host_user_plan_info')
             ->orderByDesc('id')
-            ->get();
+            ->paginate(9);
         // return $streams;
         return view('frontend.pages.stream', ['streams' => $streams]);
     }

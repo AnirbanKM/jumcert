@@ -16,6 +16,14 @@
     span.badge {
         display: inline-block !important;
     }
+
+    nav {
+        width: 100%;
+    }
+
+    ul.pagination {
+        justify-content: center;
+    }
 </style>
 
 @section('content')
@@ -273,6 +281,8 @@
 
                             </div>
                         @endforeach
+
+                        {!! $streams->links() !!}
 
                     </div>
                 </div>

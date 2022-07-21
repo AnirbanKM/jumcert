@@ -37,6 +37,14 @@
         a.dislikevideo {
             color: #1c1c1c !important;
         }
+
+        nav {
+            width: 100%;
+        }
+
+        ul.pagination {
+            justify-content: center;
+        }
     </style>
 @endsection
 
