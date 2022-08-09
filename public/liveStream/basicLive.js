@@ -1,6 +1,6 @@
 // create Agora client
 var client = AgoraRTC.createClient({
-    mode: "live",
+    mode: "live", // video call => rtc
     codec: "vp8"
 });
 

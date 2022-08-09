@@ -22,10 +22,10 @@
         </div>
     </div>
 
-    <script src="{{ asset('liveStream') }}/jquery-3.4.1.min.js"></script>
-    <script src="{{ asset('liveStream') }}/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://download.agora.io/sdk/release/AgoraRTC_N.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
         var streamId = '{{ $stream->id }}';

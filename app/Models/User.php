@@ -22,6 +22,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'stream_role',
         'password',
         'user_role',
         'facebook_id',

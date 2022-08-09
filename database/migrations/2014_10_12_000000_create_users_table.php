@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->enum('stream_role', ['host', 'audience'])->default('audience');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('user_role');

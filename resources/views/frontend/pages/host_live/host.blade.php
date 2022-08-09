@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+<style>
+    ul {
+        margin-bottom: 0px !important;
+    }
+
+    .container {
+        max-width: 1280px !important;
+    }
+</style>
+
 @section('content')
     <link rel="stylesheet" href="{{ asset('liveStream') }}/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('liveStream') }}/index.css">

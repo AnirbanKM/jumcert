@@ -87,6 +87,7 @@ class PricePlanController extends Controller
                 } else {
                     $p = "0";
                 }
+                $user->stream_role = 'host';
                 $user->user_role = $p;
                 $user->upgradationDate = time();
                 $user->update();
