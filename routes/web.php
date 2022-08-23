@@ -31,6 +31,8 @@ use App\Http\Controllers\MyGalleryController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\PrivateStreamController;
 use App\Http\Controllers\PrivateVideoController;
+use App\Http\Controllers\Stream\StreamDashboardController;
+use App\Http\Controllers\Stream\VideoLiveStreamController;
 use App\Http\Controllers\StreamRecorderController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserAccountController;
@@ -338,3 +340,19 @@ Route::get('/facebook_callback', [FacebookController::class, 'facebook_callback'
  */
 Route::get('/google_submit', [GoogleController::class, 'google_submit'])->name('google_submit');
 Route::get('/google_resp', [GoogleController::class, 'google_callback'])->name('google_callback');
+
+
+/**
+ * Whereby Video Stream Routes
+ */
+// *** Stream Dashboard
+Route::get('/user_dashboard', [StreamDashboardController::class, 'user_dashboard'])->name('user_dashboard');
+
+// *** Create Meeting
+Route::post('/create_meeting', [VideoLiveStreamController::class, 'create_meeting'])->name('create_meeting');
+
+// *** Host Join Meeting
+Route::post('/host_join_stream', [StreamDashboardController::class, 'host_join_stream'])->name('host_join_stream');
+
+// *** Audience Join Meeting
+Route::post('/audience_join_stream', [StreamDashboardController::class, 'audience_join_stream'])->name('audience_join_stream');

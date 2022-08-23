@@ -1,5 +1,0 @@
-Due task =>
-
-1) Laravel Pagination need fix = Hinst: with CSS Structure
-
-2) return view('frontend.pages.payments');

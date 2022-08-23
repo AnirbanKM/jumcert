@@ -142,8 +142,7 @@
                                                 <div class="top channel-top">
 
                                                     @if ($channel->user_info == null)
-                                                        <img src="{{ asset('user.png') }}" class="user"
-                                                            alt="" />
+                                                        <img src="{{ asset('user.png') }}" class="user" alt="" />
                                                     @else
                                                         <img src="{{ str_replace('public', 'storage', $channel->user_info->image) }}"
                                                             class="user" alt="" />
@@ -270,13 +269,12 @@
                                                                 {{-- Go Live button --}}
                                                                 <td>
                                                                     @if (strtotime($item->streamDateTime) > strtotime('now'))
-                                                                        <form
-                                                                            action="{{ route('join_as_host', $item->channel->slug) }}"
+                                                                        <form action="{{ route('host_join_stream') }}"
                                                                             method="post">
                                                                             @csrf
                                                                             <input type="hidden"
-                                                                                value="{{ $item->id }}"
-                                                                                name="streamId" />
+                                                                                value="{{ $item->meetingId }}"
+                                                                                name="meetingId" />
                                                                             <input type="submit" value="Go Live"
                                                                                 class="btn btn-primary" />
                                                                         </form>

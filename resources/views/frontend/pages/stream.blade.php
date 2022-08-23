@@ -44,7 +44,6 @@
                                 <div class="each_card">
 
                                     <div class="thumbnail">
-
                                         @auth
                                             {{-- Logic for Private Videos --}}
                                             @if ($stream->stream_type == 'Private')
@@ -99,7 +98,7 @@
                                                                 @endif
                                                             </div>
                                                         @endif
-                                                    @elseif($stream->user_purchased_video->user_id == Auth::user()->id)
+                                                    @elseif($stream->user_purchased_video->buyer_id == Auth::user()->id)
                                                         {{-- Check if auth user once purchased the video --}}
                                                         <div class="thumbnail streamPurchasedModals"
                                                             data-id={{ $stream->id }}>
@@ -137,7 +136,7 @@
                                                 @endif
                                             @else
                                                 {{-- Public Stream Conditions --}}
-                                                {{-- if condition check if Auht user_id & stream user_id are same public stream --}}
+                                                {{-- Condition check if Auht user_id & stream user_id are same public stream --}}
                                                 @if ($stream->user_id == Auth::user()->id)
                                                     <div class="thumbnail publicModals" data-id={{ $stream->id }}>
                                                         @if ($stream->thumbnail == null)
@@ -172,7 +171,7 @@
                                                     </div>
                                                 @else
                                                     {{-- else condition check if Auht user_id & stream user_id are not same public stream --}}
-                                                    <div class="thumbnail publicModals" data-id={{ $stream->id }}>
+                                                    <div class="thumbnail publicModals" data-id={{ $stream->meetingId }}>
                                                         @if ($stream->thumbnail == null)
                                                             <img src="{{ asset('thumbnail.jpg') }}" class="w-100"
                                                                 alt="" />
@@ -182,7 +181,7 @@
                                                         @endif
                                                     </div>
 
-                                                    <div class="modal fade show" id="publicModal{{ $stream->id }}"
+                                                    <div class="modal fade show" id="publicModal{{ $stream->meetingId }}"
                                                         tabindex="-1" role="dialog" aria-hidden="true">
                                                         <div class="modal-dialog ">
                                                             <div class="modal-content">
@@ -196,11 +195,11 @@
                                                                     </button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <form action="{{ route('public_stream') }}"
+                                                                    <form action="{{ route('audience_join_stream') }}"
                                                                         method="POST">
                                                                         @csrf
                                                                         <input type="hidden" name="streamId"
-                                                                            value="{{ $stream->id }}" />
+                                                                            value="{{ $stream->meetingId }}" />
                                                                         <input type="submit" value="Join Stream">
                                                                     </form>
                                                                 </div>
@@ -214,8 +213,7 @@
                                         @guest
                                             <div class="thumbnail publicAlertModal" data-id={{ $stream->id }}>
                                                 @if ($stream->thumbnail == null)
-                                                    <img src="{{ asset('thumbnail.jpg') }}" class="w-100"
-                                                        alt="" />
+                                                    <img src="{{ asset('thumbnail.jpg') }}" class="w-100" alt="" />
                                                 @else
                                                     <img src="{{ $stream->thumbnail }}" class="w-100" alt="" />
                                                 @endif

@@ -23,7 +23,11 @@ class LiveStream extends Model
         'stream_type',
         'price',
         'status',
-        'total_views'
+        'total_views',
+        'roomName',
+        'meetingId',
+        'hostRoomUrl',
+        'audienceRoomUrl'
     ];
 
     public function playListInfo()

@@ -59,6 +59,31 @@ class LiveStreamController extends Controller
         }
 
         try {
+            $api_key = env('WHEREBY_TOKEN');
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://api.whereby.dev/v1/meetings');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt(
+                $ch,
+                CURLOPT_POSTFIELDS,
+                '{
+            "endDate": "2099-02-18T14:23:00.000Z",
+            "fields": ["hostRoomUrl"]}'
+            );
+
+            $headers = [
+                'Authorization: Bearer ' . $api_key,
+                'Content-Type: application/json'
+            ];
+
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            $response = curl_exec($ch);
+            $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            curl_close($ch);
+
+            $data = json_decode($response);
+
             $obj = new LiveStream();
             $obj->streamDateTime = $streaming_dateTime;
             $obj->topic = $streaming_topic;
@@ -70,6 +95,10 @@ class LiveStreamController extends Controller
             $obj->price = $price;
             $obj->stream_type = $stream_type;
             $obj->thumbnail = $thumbnailLink;
+            $obj->roomName = $data->roomName;
+            $obj->meetingId = $data->meetingId;
+            $obj->hostRoomUrl = $data->hostRoomUrl;
+            $obj->audienceRoomUrl = $data->roomUrl;
             $obj->save();
 
             return redirect()->route('videos')->with('success', 'Live stream added successfully');

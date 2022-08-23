@@ -79,7 +79,8 @@
                                             @foreach ($streams as $item)
                                                 <div class="col-xl-4 col-md-6">
                                                     <div class="thumbnail">
-                                                        <div class="privateStream" data-sid="{{ $item->stream->id }}">
+                                                        <div class="privateStream"
+                                                            data-sid="{{ $item->stream->meetingId }}">
                                                             <img src="{{ $item->stream->thumbnail }}" class="w-100"
                                                                 alt="">
                                                         </div>
@@ -127,7 +128,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('public_stream') }}" method="POST">
+                    <form action="{{ route('audience_join_stream') }}" method="POST">
                         @csrf
                         <input type="hidden" name="streamId" class="privateStreamId" />
                         <input type="submit" value="Join Stream">
@@ -136,7 +137,6 @@
             </div>
         </div>
     </div>
-
 
     <!-- The Modal -->
     <div class="modal" id="playListModal">
