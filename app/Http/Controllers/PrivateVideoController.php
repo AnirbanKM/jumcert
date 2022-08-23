@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Backend\AdminCommission;
+use App\Models\ConnectedAccountInfo;
 use App\Models\Frontend\UserAccount;
 use App\Models\Frontend\VideoUpload;
 use App\Models\Payment\Order;
@@ -16,7 +17,7 @@ class PrivateVideoController extends Controller
     public function payment(Request $r)
     {
         $vid = $r->vId;
-        $query = VideoUpload::join('user_accounts', 'video_uploads.user_id', '=', 'user_accounts.user_id')
+        $query = VideoUpload::join('connected_accounts', 'video_uploads.user_id', '=', 'connected_accounts.user_id')
             ->where('video_uploads.id', $vid)
             ->first();
 
@@ -69,50 +70,29 @@ class PrivateVideoController extends Controller
             // Find Channel Owner
             $videoInfo = VideoUpload::find($videoId);
             $video_owner_id = $videoInfo->user_id;
+            $video_price = $videoInfo->price;
 
-            // Find Channel Owner Role
-            $order = Order::where('user_id', $video_owner_id)->first();
-            $plan_name = $order->plan_name;
+            $count_commission = ($video_price * 19) / 100;
 
-            // Get commission info
-            $commission = AdminCommission::where('role', $plan_name)->first();
-            $acommission = $commission->acommission;
-            $ucommission = $commission->ucommission;
+            $account = ConnectedAccountInfo::where('user_id', $video_owner_id)->first();
+            $video_owner_account_id = $account->connected_account_id;
 
-            // Calculate percentage
-            $set_admin_commission = ($price * $acommission) / 100;
-            $set_channel_commission = ($price * $ucommission) / 100;
+            $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
 
-            // Now store the value for future
-            // $wallet = Wallet::where('channel_owner_id', $video_owner_id)->first();
+            $res = $stripe->transfers->create([
+                'amount' => $count_commission,
+                'currency' => 'usd',
+                'destination' => $video_owner_account_id,
+                'transfer_group' => 'ORDER_95',
+            ]);
 
-            $createWallet = new Wallet();
-            $createWallet->channel_owner_id = $video_owner_id;
-            $createWallet->admin_commission = $set_admin_commission;
-            $createWallet->user_commission = $set_channel_commission;
-            $createWallet->buyer_id = $userId;
-            $createWallet->save();
-
-            $channelOwnerId = $createWallet->channel_owner_id;
-
-            // Fetch user wallet info
-            $wallet = Wallet::where('channel_owner_id', $channelOwnerId)->first();
-            $user_commission =  $wallet->user_commission;
-
-            // Fetch user account
-            $user_account = UserAccount::where('user_id', $channelOwnerId)->first();
-            $user_bank_account_id = $user_account->bank_account_id;
-
-            $response = Http::asForm()
-                ->withToken(env('STRIPE_SECRET'))
-                ->post(
-                    'https://api.stripe.com/v1/payouts',
-                    [
-                        'amount' =>  $user_commission,
-                        'currency' => 'usd',
-                        'destination' => $user_bank_account_id,
-                    ]
-                );
+            $stripe->accounts->update(
+                $video_owner_account_id,
+                [
+                    'tos_acceptance[date]' => strtotime("now"),
+                    'tos_acceptance[ip]' => '8.8.8.8'
+                ]
+            );
 
             // Create Record for private video
             $obj = new PrivateVideo();

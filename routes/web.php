@@ -7,6 +7,8 @@ use App\Http\Controllers\Backend\AdminVideoController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\LoginController;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ConnectedAccountController;
+use App\Http\Controllers\ConnectedAccountInfoController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\ChannelController;
@@ -356,3 +358,18 @@ Route::post('/host_join_stream', [StreamDashboardController::class, 'host_join_s
 
 // *** Audience Join Meeting
 Route::post('/audience_join_stream', [StreamDashboardController::class, 'audience_join_stream'])->name('audience_join_stream');
+
+
+// *** Stripe Connected Account Routes
+
+// Create Connected Account UI & Update Created Account
+Route::get('/connected_account', [ConnectedAccountController::class, 'index'])->name('connected_account');
+
+// Create Connected Account with API
+Route::post('/stripe_create_account', [ConnectedAccountController::class, 'stripe_create_account'])->name('stripe_create_account');
+
+// Update Connected Account with API
+Route::post('/update_connected_account', [ConnectedAccountInfoController::class, 'update_connected_account'])->name('update_connected_account');
+
+// Update Connected Account Bank Account Info with API
+Route::post('/add_bank_account', [ConnectedAccountInfoController::class, 'add_bank_account'])->name('add_bank_account');
