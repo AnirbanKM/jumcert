@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Backend\AdminCommission;
+use App\Models\ConnectedAccountInfo;
 use App\Models\Frontend\PrivateStream;
 use App\Models\Frontend\UserAccount;
 use App\Models\LiveStream;
@@ -66,18 +67,54 @@ class PrivateStreamController extends Controller
 
         $hostUserId = $r->hostId;
 
-        $userinfo = Order::where('user_id', $hostUserId)->first();
-        $userPlanName = $userinfo->plan_name;
-
-        if ($userPlanName == "Pro") {
-            $setBuyerLimit = 1;
-        } else {
-            $setBuyerLimit = 0;
-        }
-
-        $userId = auth()->user()->id;
-
         try {
+
+            $userinfo = Order::where('user_id', $hostUserId)->first();
+            $userPlanName = $userinfo->plan_name;
+
+            if ($userPlanName == "Pro") {
+                $setBuyerLimit = 1;
+            } else {
+                $setBuyerLimit = 0;
+            }
+
+            $userId = auth()->user()->id;
+
+            // Find LiveStream info
+            $stream = LiveStream::find($streamId);
+            $stream->stream_buyer_limit = $setBuyerLimit;
+            $stream->update();
+
+            // Get info of purchased stream
+            $stream_owner_id = $stream->user_id;
+            $stream_price = $stream->price;
+
+            // Set commission
+            $count_commission = (int) ($stream_price * 81) / 100;
+
+            // Find stream owner bank account info
+            $account = ConnectedAccountInfo::where('user_id', $stream_owner_id)->first();
+            $video_owner_account_id = $account->connected_account_id;
+
+            // Stripe Initialize
+            $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+
+            $res = $stripe->transfers->create([
+                'amount' => $count_commission * 100,
+                'currency' => 'usd',
+                'destination' => $video_owner_account_id,
+                'transfer_group' => 'ORDER_95',
+            ]);
+
+            $stripe->accounts->update(
+                $video_owner_account_id,
+                [
+                    'tos_acceptance[date]' => strtotime("now"),
+                    'tos_acceptance[ip]' => '8.8.8.8'
+                ]
+            );
+
+            // Save the buyer who purchased the stream
             $obj = new PrivateStream();
             $obj->stream_id = $streamId;
             $obj->channel_id = $channelId;
@@ -91,56 +128,8 @@ class PrivateStreamController extends Controller
             $obj->status = $status;
             $obj->save();
 
-            // Find LiveStream info
-            $stream = LiveStream::find($streamId);
-            $stream->stream_buyer_limit = $setBuyerLimit;
-            $stream->update();
-
-            $stream_owner_id = $stream->user_id;
-
-            // Find Channel Owner Role
-            $order = Order::where('user_id', $stream_owner_id)->first();
-            $plan_name = $order->plan_name;
-
-            // Get commission info
-            $commission = AdminCommission::where('role', $plan_name)->first();
-            $acommission = $commission->acommission;
-            $ucommission = $commission->ucommission;
-
-            // Calculate percentage
-            $set_admin_commission = ($price * $acommission) / 100;
-            $set_channel_commission = ($price * $ucommission) / 100;
-
-            $createWallet = new Wallet();
-            $createWallet->channel_owner_id = $stream_owner_id;
-            $createWallet->admin_commission = $set_admin_commission;
-            $createWallet->user_commission = $set_channel_commission;
-            $createWallet->buyer_id = $userId;
-            $createWallet->save();
-
-            $channelOwnerId = $createWallet->channel_owner_id;
-
-            // Fetch user wallet info
-            $wallet = Wallet::where('channel_owner_id', $channelOwnerId)->first();
-            $user_commission =  $wallet->user_commission;
-
-            // Fetch user account
-            $user_account = UserAccount::where('user_id', $channelOwnerId)->first();
-            $user_bank_account_id = $user_account->bank_account_id;
-
-            $response = Http::asForm()
-                ->withToken(env('STRIPE_SECRET'))
-                ->post(
-                    'https://api.stripe.com/v1/payouts',
-                    [
-                        'amount' =>  $user_commission,
-                        'currency' => 'usd',
-                        'destination' => $user_bank_account_id,
-                    ]
-                );
-
             $w = array(
-                'status' => 200, $stream_owner_id, $wallet
+                'status' => 200
             );
             echo json_encode($w);
         } catch (\Throwable $th) {

@@ -72,7 +72,7 @@ class PrivateVideoController extends Controller
             $video_owner_id = $videoInfo->user_id;
             $video_price = $videoInfo->price;
 
-            $count_commission = ($video_price * 19) / 100;
+            $count_commission = ($video_price * 81) / 100;
 
             $account = ConnectedAccountInfo::where('user_id', $video_owner_id)->first();
             $video_owner_account_id = $account->connected_account_id;
