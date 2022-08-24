@@ -11,6 +11,6 @@ class TestController extends Controller
 {
     public function test()
     {
-        dd(Auth::user());
+        return Auth::user();
     }
 }

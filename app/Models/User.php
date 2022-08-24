@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\Frontend\UserAccount;
 use App\Models\Payment\Order;
 use App\Models\Payment\Payment;
+use App\Models\ConnectedAccount;
+use App\Models\ConnectedAccountInfo;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -54,9 +56,14 @@ class User extends Authenticatable
         return $this->hasOne(UserProfileInfo::class, 'user_id', 'id');
     }
 
-    public function userAccount()
+    public function connectedAccount()
     {
-        return $this->hasOne(UserAccount::class, 'user_id', 'id');
+        return $this->hasOne(ConnectedAccount::class, 'user_id', 'id');
+    }
+
+    public function connectedAccountInfo()
+    {
+        return $this->hasOne(ConnectedAccountInfo::class, 'user_id', 'id');
     }
 
     public function usersOrders()

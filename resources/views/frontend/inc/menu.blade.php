@@ -111,48 +111,46 @@
                                     {{-- For only pro & business users account --}}
                                     <li>
                                         <div class="icon">
-                                            <img src="{{ asset('frontend/img/sidebar/connections.png') }}"
-                                                alt="">
+                                            <img src="{{ asset('frontend/img/sidebar/connections.png') }}" alt="">
                                         </div>
-                                        <a href="{{ route('user_account') }}">My Account</a>
+                                        <a href="{{ route('connected_account') }}">My Account</a>
                                     </li>
-                                    {{-- <li>
-                                        <div class="icon">
-                                            <img src="{{ asset('frontend/img/sidebar/connections.png') }}"
-                                                alt="">
-                                        </div>
-                                        <a href="{{ route('user_wallet') }}">My Wallet</a>
-                                    </li> --}}
+
                                     <li>
                                         <div class="icon">
                                             <img src="{{ asset('frontend/img/explore.png') }}" alt="">
                                         </div>
                                         <a href="{{ route('channel') }}">Create Channel</a>
                                     </li>
+
                                     <li>
                                         <div class="icon">
                                             <img src="{{ asset('frontend/img/icon/3.png') }}" alt="">
                                         </div>
                                         <a href="{{ route('playlist') }}">Create Playlist</a>
                                     </li>
+
                                     <li>
                                         <div class="icon">
                                             <img src="{{ asset('frontend/img/drop-2.png') }}" alt="">
                                         </div>
                                         <a href="{{ route('video_upload') }}">Upload Video</a>
                                     </li>
+
                                     <li>
                                         <div class="icon">
                                             <img src="{{ asset('frontend/img/drop-4.png') }}" alt="">
                                         </div>
                                         <a href="{{ route('video_edit_frm') }}">Manage Videos</a>
                                     </li>
+
                                     <li>
                                         <div class="icon">
                                             <img src="{{ asset('frontend/img/drop-1.png') }}" alt="">
                                         </div>
                                         <a href="{{ route('videos') }}">My Videos</a>
                                     </li>
+
                                     <li>
                                         <div class="icon">
                                             <img src="{{ asset('frontend/img/drop-5.png') }}" alt="">
