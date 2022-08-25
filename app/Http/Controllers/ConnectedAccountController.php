@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Frontend\VideoUpload;
 use App\Models\ConnectedAccount;
 use Illuminate\Http\Request;
 
@@ -9,8 +10,18 @@ class ConnectedAccountController extends Controller
 {
     public function index()
     {
-        $account = ConnectedAccount::where('user_id', auth()->user()->id)->first();
-        return view('frontend.pages.connectaccount.index', ['account' => $account]);
+        $user_id = auth()->user()->id;
+
+        $account = ConnectedAccount::where('user_id', $user_id)->first();
+
+        $owner_videos = VideoUpload::join('private_videos', 'video_uploads.id', '=', 'private_videos.video_id')
+            ->where('video_uploads.user_id', $user_id)
+            ->paginate(2);
+
+        return view('frontend.pages.connectaccount.index', [
+            'account' => $account,
+            'owner_videos' => $owner_videos
+        ]);
     }
 
     public function stripe_create_account(Request $r)

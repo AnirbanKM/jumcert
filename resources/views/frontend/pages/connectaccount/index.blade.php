@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+<style>
+
+</style>
+
 @section('content')
     <section class="page_content connections-section1 videos-section1 channel-section1 about-section1">
         <div class="container">
@@ -31,6 +35,12 @@
                                     <a class="nav-link" id="bank-account-tab" data-toggle="tab" href="#bank_account"
                                         role="tab" aria-controls="bank_account" aria-selected="false">
                                         Update Your Connected Account's Bank Info
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" id="all-transaction-tab" data-toggle="tab" href="#all_transaction"
+                                        role="tab" aria-controls="all_transaction" aria-selected="false">
+                                        My Earnings
                                     </a>
                                 </li>
                             </ul>
@@ -261,6 +271,67 @@
 
                                 </div>
 
+                                <div class="tab-pane fade" id="all_transaction" role="tabpanel"
+                                    aria-labelledby="all_transaction">
+
+                                    @php
+                                        $x = 0;
+
+                                        if (count($owner_videos) > 0) {
+                                            foreach ($owner_videos as $item) {
+                                                $x = $x + $item->price;
+                                            }
+
+                                            $owner_commission = ($x * 81) / 100;
+                                        } else {
+                                            $owner_commission = 0;
+                                        }
+                                    @endphp
+
+                                    <div class="heading">
+                                        <h2>Your total earning : ${{ $owner_commission }}</h2>
+                                    </div>
+
+                                    @if (count($owner_videos) > 0)
+                                        <div class="table-responsive">
+                                            <table class="table display" id="table_id">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Title</th>
+                                                        <th scope="col">Image</th>
+                                                        <th scope="col">Price</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($owner_videos as $item)
+                                                        <tr>
+                                                            <th scope="row">{{ $loop->index + 1 }}</th>
+                                                            <td>{{ $item->title }}</td>
+                                                            <td>
+                                                                <img src="{{ $item->thumbnail }}" alt=""
+                                                                    style="width: 100px;" />
+                                                            </td>
+                                                            <td>
+                                                                ${{ ($item->price * 81) / 100 }}
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+
+                                                </tbody>
+                                            </table>
+
+                                            {!! $owner_videos->links() !!}
+
+                                        </div>
+                                    @else
+                                        <h1 style="color: #1c1c1c;">
+                                            Currently you have no earning.
+                                        </h1>
+                                    @endif
+
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -268,10 +339,13 @@
             </div>
         </div>
 
-
-
     </section>
 @endsection
 
 @section('frontendJs')
+    <script>
+        $(document).ready(function() {
+
+        });
+    </script>
 @endsection

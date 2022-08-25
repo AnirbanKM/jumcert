@@ -12,6 +12,11 @@
 <!-- Slim Nav Script -->
 <script src="{{ asset('frontend/js/jquery.slimNav_sk78.min.js') }}"></script>
 
+{{-- datatables CDN --}}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
+
 
 <!-- Mobile Nav Script -->
 <script>

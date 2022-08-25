@@ -17,14 +17,19 @@ class TestController extends Controller
 
         $owner_videos = VideoUpload::join('private_videos', 'video_uploads.id', '=', 'private_videos.video_id')
             ->where('video_uploads.user_id', $user_id)
-            ->get([
-                'private_videos.payment_id',
-                'private_videos.user_id',
-                'private_videos.created_at',
-                'video_uploads.*'
-            ]);
+            ->get();
 
-        dd($owner_videos);
+        // $owner_videos = VideoUpload::where('video_uploads.user_id', $user_id)
+        //     ->with('purchasedVideo')
+        //     ->groupBy('private_videos.video_id')
+        //     ->get(DB::raw('sum(video_uploads.price) as price'));
+
+        // $q = PrivateVideo::with('video')
+        //     ->whereRelation('video', 'user_id', '=', $user_id)
+        //     ->groupBy('video_id')
+        //     ->get();
+
+        // dd($q);
 
         return view('test', ['owner_videos' => $owner_videos]);
     }
