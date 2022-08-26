@@ -13,24 +13,20 @@ class TestController extends Controller
 {
     public function test()
     {
-        $user_id = auth()->user()->id;
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+        $bal = $stripe->balance->retrieve();
+        $payOutAmount = (int)$bal->available[0]->amount ?? null;
 
-        $owner_videos = VideoUpload::join('private_videos', 'video_uploads.id', '=', 'private_videos.video_id')
-            ->where('video_uploads.user_id', $user_id)
-            ->get();
+        if ((($payOutAmount !== null)) &&  ($payOutAmount <= 0)) {
 
-        // $owner_videos = VideoUpload::where('video_uploads.user_id', $user_id)
-        //     ->with('purchasedVideo')
-        //     ->groupBy('private_videos.video_id')
-        //     ->get(DB::raw('sum(video_uploads.price) as price'));
-
-        // $q = PrivateVideo::with('video')
-        //     ->whereRelation('video', 'user_id', '=', $user_id)
-        //     ->groupBy('video_id')
-        //     ->get();
-
-        // dd($q);
-
-        return view('test', ['owner_videos' => $owner_videos]);
+            $res = $stripe->topups->create(
+                [
+                    'amount' => 20000,
+                    'currency' => 'usd',
+                    'description' => 'Top-up for week of ' . date('Y-m-d'),
+                    'statement_descriptor' => 'Weekly top-up',
+                ]
+            );
+        }
     }
 }

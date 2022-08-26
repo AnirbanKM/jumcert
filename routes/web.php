@@ -373,3 +373,6 @@ Route::post('/update_connected_account', [ConnectedAccountInfoController::class,
 
 // Update Connected Account Bank Account Info with API
 Route::post('/add_bank_account', [ConnectedAccountInfoController::class, 'add_bank_account'])->name('add_bank_account');
+
+// User Earning Pagination
+Route::get('/earning_pagination', [ConnectedAccountController::class, 'pagination'])->name('earning_pagination');

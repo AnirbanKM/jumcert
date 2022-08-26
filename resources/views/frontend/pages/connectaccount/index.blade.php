@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
 <style>
+    .connections-section1 ul li a {
+        padding: 16px;
+    }
 
+    .pagination {
+        justify-content: center;
+    }
 </style>
 
 @section('content')
@@ -17,6 +23,15 @@
 
                     <div class="row rounded right-connections-section1 right-videos-section1 right-homepage-section1">
                         <div class="col-md-12">
+
+                            @php
+                                $current_url = url()->full();
+                                $key = 'page';
+                            @endphp
+
+                            @if (strpos($current_url, $key) == true)
+                                <script></script>
+                            @endif
 
                             <ul class="nav tab-section" id="myTab" role="tablist">
                                 <li>
@@ -293,8 +308,8 @@
                                     </div>
 
                                     @if (count($owner_videos) > 0)
-                                        <div class="table-responsive">
-                                            <table class="table display" id="table_id">
+                                        <div class="table-responsive" id="myEarning">
+                                            <table class="table display">
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">#</th>
@@ -317,12 +332,10 @@
                                                             </td>
                                                         </tr>
                                                     @endforeach
-
                                                 </tbody>
                                             </table>
 
                                             {!! $owner_videos->links() !!}
-
                                         </div>
                                     @else
                                         <h1 style="color: #1c1c1c;">
@@ -345,6 +358,31 @@
 @section('frontendJs')
     <script>
         $(document).ready(function() {
+
+            $('body').on('click', '.pagination a', function(e) {
+                e.preventDefault();
+
+                let page = $(this).attr('href').split('page=')[1];
+
+                $.ajax({
+                    url: "{{ route('earning_pagination') }}",
+                    type: 'GET',
+                    dataType: 'json',
+                    data: {
+                        page: page
+                    },
+                    suceess: function(resp) {
+                        console.log("Controller succes response");
+                        $("#myEarning").html(resp);
+                    },
+                    error: function(error) {
+                        console.log("Controller error response");
+                        console.log(error);
+                        $("#myEarning").html(error.responseText);
+                    }
+                });
+
+            });
 
         });
     </script>

@@ -54,4 +54,15 @@ class ConnectedAccountController extends Controller
             return redirect()->route('connected_account')->with('error', 'Something went wrong');
         }
     }
+
+    public function pagination()
+    {
+        $user_id = auth()->user()->id;
+
+        $owner_videos = VideoUpload::join('private_videos', 'video_uploads.id', '=', 'private_videos.video_id')
+            ->where('video_uploads.user_id', $user_id)
+            ->paginate(2);
+
+        return view('frontend.pages.connectaccount.earning_pagination', ['owner_videos' => $owner_videos]);
+    }
 }
