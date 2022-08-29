@@ -22,25 +22,36 @@ class PasswordResetController extends Controller
 
         if ($user !== null) {
 
-            // Generate Token
-            $token = Str::random(60);
+            // Check if user email address already exists in passwordreset table
+            $checkEmail = PasswordReset::where('email', '=', $r->email)->get();
 
-            // Saving data to the password reset table
-            PasswordReset::create([
-                'email' => $r->email,
-                'token' => $token,
-                'created_at' => Carbon::now()
-            ]);
+            if (count($checkEmail) > 0) {
 
-            // Sending Email with pasword reset view
-            Mail::send('email.reset_link', ['token' => $token], function (Message $message) use ($email) {
-                $message->subject('Reset your password');
-                $message->to($email);
-            });
-            $html['msg'] = 'Password reset email sent successfully, check your email';
-            $html['status'] = "success";
-            $html['code'] = 200;
-            echo json_encode($html);
+                $html['msg'] = 'Password reset email already send, check your email';
+                $html['status'] = "success";
+                $html['code'] = 200;
+                echo json_encode($html);
+            } else {
+                // Generate Token
+                $token = Str::random(60);
+
+                // Saving data to the password reset table
+                PasswordReset::create([
+                    'email' => $r->email,
+                    'token' => $token,
+                    'created_at' => Carbon::now()
+                ]);
+
+                // Sending Email with pasword reset view
+                Mail::send('email.reset_link', ['token' => $token], function (Message $message) use ($email) {
+                    $message->subject('Reset your password');
+                    $message->to($email);
+                });
+                $html['msg'] = 'Password reset email sent successfully, check your email';
+                $html['status'] = "success";
+                $html['code'] = 200;
+                echo json_encode($html);
+            }
         } else {
 
             return response()->json([

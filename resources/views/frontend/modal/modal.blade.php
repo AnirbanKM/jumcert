@@ -358,12 +358,12 @@
                 success: function(resp) {
                     console.log(resp);
 
-                    var msg = resp.msg;
-                    var status = resp.status;
+                    // var msg = resp.msg;
+                    // var status = resp.status;
 
-                    notification(msg, status);
+                    // notification(msg, status);
 
-                    $("#resetpass").modal('hide');
+                    // $("#resetpass").modal('hide');
                 }
             });
         });

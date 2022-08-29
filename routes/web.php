@@ -327,7 +327,8 @@ Route::get('/test', [TestController::class, 'test'])->name('test');
 /**
  * Password Reset Routes
  * */
-Route::get('/send_reset_password_email', [PasswordResetController::class, 'send_reset_password_email'])->name('send_reset_password_email');
+Route::get('/send_reset_password_email', [PasswordResetController::class, 'send_reset_password_email'])
+    ->name('send_reset_password_email');
 Route::get('/reset/{token}', [PasswordResetController::class, 'reset'])->name('reset');
 Route::post('/reset_password', [PasswordResetController::class, 'reset_password'])->name('reset_password');
 
