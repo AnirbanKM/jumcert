@@ -53,18 +53,18 @@ class PasswordResetController extends Controller
                     $html['msg'] = 'Password reset email sent successfully, check your email';
                     $html['status'] = "success";
                     $html['code'] = 200;
-
                     echo json_encode($html);
                 }
+            } else {
+
+                $html['msg'] = 'Provided credentials are incorrect. Please try again';
+                $html['status'] = "error";
+                $html['code'] = 404;
+                echo json_encode($html);
             }
         } catch (\Throwable $th) {
             throw $th;
         }
-
-        // return response()->json([
-        //     'msg' => 'Provided credentials are incorrect. Please try again',
-        //     'status' => 'error',
-        // ]);
     }
 
     public function reset($token)
