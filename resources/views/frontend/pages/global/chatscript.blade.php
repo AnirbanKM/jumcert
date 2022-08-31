@@ -218,6 +218,5 @@
         $('#videoOwnerModal').removeClass('show').css('display', 'none');
     });
 
-
     });
 </script>

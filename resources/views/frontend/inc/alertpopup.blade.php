@@ -8,7 +8,7 @@
     <div class="user-account-alert-modal show" data-signup-modal>
         <img src="https://jumcart.previewforclient.com/frontend/img/t-alert-con.svg" alt="" />
         <h5>
-            <a href="{{ route('user_account') }}">
+            <a href="{{ route('connected_account') }}">
                 You need to create your connected account.
                 Go to the my account page.
             </a>
@@ -34,7 +34,7 @@
     <div class="user-account-alert-modal show" data-signup-modal>
         <img src="https://jumcart.previewforclient.com/frontend/img/t-alert-con.svg" alt="" />
         <h5>
-            <a href="{{ route('user_account') }}">
+            <a href="{{ route('connected_account') }}">
                 You need to update your connected account.
                 Go to the My account page & click <b>update your connected account tab</b>.
             </a>
