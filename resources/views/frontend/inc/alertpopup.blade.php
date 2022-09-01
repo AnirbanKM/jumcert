@@ -5,8 +5,8 @@
 </style>
 
 @if (Auth::user()->connectedAccount == null)
-    <div class="user-account-alert-modal show" data-signup-modal>
-        <img src="https://jumcart.previewforclient.com/frontend/img/t-alert-con.svg" alt="" />
+    <div class="user-account-alert-modal show" data-signup-modal1>
+        <img src="{{ asset('alert.svg') }}" alt="" />
         <h5>
             <a href="{{ route('connected_account') }}">
                 You need to create your connected account.
@@ -15,24 +15,11 @@
         </h5>
         <span class="close2" data-close></span>
     </div>
-
-    <script>
-        const signupModal = document.querySelector('[data-signup-modal]');
-        const closeSignupModal = document.querySelector('[data-close]');
-        closeSignupModal.addEventListener('click', function(e) {
-            signupModal.classList.toggle('show');
-        });
-
-        setInterval(() => {
-            const signupModal = document.querySelector('.user-account-alert-modal');
-            signupModal.classList.add("show");
-        }, 600000);
-    </script>
 @endif
 
 @if (Auth::user()->connectedAccountInfo == null)
-    <div class="user-account-alert-modal show" data-signup-modal>
-        <img src="https://jumcart.previewforclient.com/frontend/img/t-alert-con.svg" alt="" />
+    <div class="user-account-alert-modal show" data-signup-modal2>
+        <img src="{{ asset('alert.svg') }}" alt="" />
         <h5>
             <a href="{{ route('connected_account') }}">
                 You need to update your connected account.
@@ -41,17 +28,22 @@
         </h5>
         <span class="close2" data-close></span>
     </div>
+@endif
 
-    <script>
-        const signupModal = document.querySelector('[data-signup-modal]');
-        const closeSignupModal = document.querySelector('[data-close]');
-        closeSignupModal.addEventListener('click', function(e) {
-            signupModal.classList.toggle('show');
+<script>
+    const signupModal1 = document.querySelector('[data-signup-modal1]');
+    const signupModal2 = document.querySelector('[data-signup-modal2]');
+    const closeSignupModal = document.querySelectorAll('[data-close]');
+
+    for (let i = 0; i < closeSignupModal.length; i++) {
+        closeSignupModal[i].addEventListener('click', function(e) {
+            document.querySelector(`[data-signup-modal${i+1}]`).classList.toggle('show');
         });
 
-        setInterval(() => {
-            const signupModal = document.querySelector('.user-account-alert-modal');
-            signupModal.classList.add("show");
-        }, 600000);
-    </script>
-@endif
+    }
+
+    setInterval(() => {
+        const signupModal = document.querySelector('.user-account-alert-modal');
+        signupModal.classList.add("show");
+    }, 600000);
+</script>
