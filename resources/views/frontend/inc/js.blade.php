@@ -107,7 +107,7 @@
                     event_id: 1
                 },
                 success: function(resp) {
-                    console.log(resp);
+                    // console.log(resp);
                 }
             })
         }

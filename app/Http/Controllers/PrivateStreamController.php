@@ -18,39 +18,48 @@ class PrivateStreamController extends Controller
     public function join_Private_Stream(Request $r)
     {
         $streamId = $r->streamId;
-        $query = LiveStream::where('id', $streamId)->first();
 
-        // get video info
-        $stopic = $query->topic;
-        $sprice =  $query->price;
-        $channelId =  $query->channel_id;
-        $playlistId =  $query->playlist_id;
-        $userId =  $query->user_id;
+        $query = LiveStream::join('connected_accounts', 'live_streams.user_id', '=', 'connected_accounts.user_id')
+            ->where('live_streams.id', $streamId)
+            ->first();
 
-        // Enter Your Stripe Secret
-        \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        if ($query != null) {
+            $query = LiveStream::where('id', $streamId)->first();
 
-        $amount = $sprice;
-        $amount *= 100;
-        $amount = (int) $amount;
+            // get video info
+            $stopic = $query->topic;
+            $sprice =  $query->price;
+            $channelId =  $query->channel_id;
+            $playlistId =  $query->playlist_id;
+            $userId =  $query->user_id;
 
-        $payment_intent = \Stripe\PaymentIntent::create([
-            'description' => 'Stripe Live Payment',
-            'amount' => $amount,
-            'currency' => 'USD',
-            'description' => 'Payment from Jumcert',
-            'payment_method_types' => ['card'],
-        ]);
-        $intent = $payment_intent->client_secret;
-        return view('frontend.pages.payment.private_stream_checkout', [
-            'intent' => $intent,
-            'streamId' => $streamId,
-            'sname' => $stopic,
-            'price' => $sprice,
-            'channelId' => $channelId,
-            'playlistId' => $playlistId,
-            'userId' => $userId
-        ]);
+            // Enter Your Stripe Secret
+            \Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+
+            $amount = $sprice;
+            $amount *= 100;
+            $amount = (int) $amount;
+
+            $payment_intent = \Stripe\PaymentIntent::create([
+                'description' => 'Stripe Live Payment',
+                'amount' => $amount,
+                'currency' => 'USD',
+                'description' => 'Payment from Jumcert',
+                'payment_method_types' => ['card'],
+            ]);
+            $intent = $payment_intent->client_secret;
+            return view('frontend.pages.payment.private_stream_checkout', [
+                'intent' => $intent,
+                'streamId' => $streamId,
+                'sname' => $stopic,
+                'price' => $sprice,
+                'channelId' => $channelId,
+                'playlistId' => $playlistId,
+                'userId' => $userId
+            ]);
+        } else {
+            return redirect()->route('stream')->with('error', 'stream is currently not available for purchase.');
+        }
     }
 
     public function private_stream_payment_process(Request $r)
