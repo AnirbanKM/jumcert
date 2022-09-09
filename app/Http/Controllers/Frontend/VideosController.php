@@ -21,8 +21,10 @@ class VideosController extends Controller
             $videos = VideoUpload::orderBy('id', 'desc')->with('category', 'user_info')->where('user_id', $userID)->paginate(9);
             $playlists = Playlist::where('user_id', $userID)->with('videos')->get();
             $channels = Channel::where('user_id', $userID)->get();
+
             $liveStreams = LiveStream::where('user_id', $userID)
                 ->where('streamDateTime', '>', Carbon::createFromFormat('Y-m-d H:i:s', Carbon::now()))
+                ->where('status', '!=', 'Completed')
                 ->with('playListInfo', 'channel')
                 ->orderBy('id', 'desc')->get();
 

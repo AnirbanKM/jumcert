@@ -16,8 +16,7 @@
                         <div class="right-works-section2 row">
                             <div class="col-md-12">
                                 <div class="embed-responsive embed-responsive-16by9">
-                                    <video controls loop>
-                                        <source src="{{ $recordedStreamObj->video_path }}" type="video/webm">
+                                    <video width="320" height="240" controls>
                                         <source src="{{ $recordedStreamObj->video_path }}" type="video/mp4">
                                     </video>
                                 </div>

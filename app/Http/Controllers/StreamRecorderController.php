@@ -83,8 +83,6 @@ class StreamRecorderController extends Controller
     {
         $id = $recorded_stream_id;
 
-
-
         $recordedStreamObj = StreamRecorder::where('id', $id)
             ->with('streamInfo', 'channerOwnerInfo')
             ->first();

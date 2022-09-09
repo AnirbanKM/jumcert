@@ -11,8 +11,14 @@ class MyGalleryController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $videos = PrivateVideo::where('user_id', $user_id)->with('video')->get();
-        $streams = PrivateStream::where('buyer_id', $user_id)->with('channel', 'stream')->get();
+
+        $videos = PrivateVideo::where('user_id', $user_id)
+            ->with('video')
+            ->get();
+
+        $streams = PrivateStream::where('buyer_id', $user_id)
+            ->with('channel', 'stream')
+            ->get();
 
         return view('frontend.pages.gallery.gallery', [
             'videos' => $videos,
