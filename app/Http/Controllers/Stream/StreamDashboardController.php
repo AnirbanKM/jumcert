@@ -68,6 +68,8 @@ class StreamDashboardController extends Controller
             $response = $s3Client->listObjects(array('Bucket' => 'jumcertstorage', 'MaxKeys' => 100000));
             $files = $response->getPath('Contents');
 
+            $S3path = '';
+
             foreach ($files as $file) {
 
                 $filename = $file['Key'];
@@ -80,7 +82,6 @@ class StreamDashboardController extends Controller
             $obj = new StreamRecorder();
             $obj->channel_owner_id = $channel_owner_id;
             $obj->buyer_id = $buyer_id;
-            $obj->video_path = $S3path;
             $obj->stream_id = $stream_id;
             $obj->save();
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\LiveStream;
 use App\Models\StreamRecorder;
+use Aws\S3\S3Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -81,12 +82,45 @@ class StreamRecorderController extends Controller
 
     public function watchStream($recorded_stream_id)
     {
-        $id = $recorded_stream_id;
-
-        $recordedStreamObj = StreamRecorder::where('id', $id)
+        $recordedStreamObj = StreamRecorder::where('id', $recorded_stream_id)
             ->with('streamInfo', 'channerOwnerInfo')
             ->first();
 
-        return view('frontend.pages.recording.watch_stream', ['recordedStreamObj' => $recordedStreamObj]);
+        $channel_owner_id = $recordedStreamObj->streamInfo->user_id;
+        $buyer_id = auth()->user()->id;
+        $stream_id = $recordedStreamObj->streamInfo->id;
+        $roomName = substr($recordedStreamObj->streamInfo->roomName, 1, 36);
+
+        $s3Client = new S3Client([
+            'version' => 'latest',
+            'region'  => 'us-east-1',
+            'credentials' => [
+                'key'    => 'AKIA3IE3MMFQ37HUMCBV',
+                'secret' => '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'
+            ]
+        ]);
+
+        $response = $s3Client->listObjects(array('Bucket' => 'jumcertstorage', 'MaxKeys' => 100000));
+        $files = $response->getPath('Contents');
+
+        $S3path = '';
+
+
+        foreach ($files as $file) {
+
+            $filename = $file['Key'];
+
+            if (substr($filename, 0, 36) == $roomName) {
+                $S3path = 'https://jumcertstorage.s3.amazonaws.com/' . $filename;
+            }
+        }
+
+        $obj = StreamRecorder::where('stream_id', $stream_id)->first();
+        $obj->video_path = $S3path;
+        $obj->update();
+
+        return view('frontend.pages.recording.watch_stream', [
+            'recordedStreamObj' => $recordedStreamObj
+        ]);
     }
 }
