@@ -165,7 +165,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/share_stream/{streamId}', [StreamController::class, 'share_stream'])->name('share_stream');
 
     // ***Channel Search
-    Route::post('/search_channel', [ChannelController::class, 'search_channel'])->name('search_channel');
+    Route::get('/search_channel', [ChannelController::class, 'search_channel_result'])
+        ->name('search_channel');
 
     // Live Stream Record
     Route::get('/get_resource', [StreamRecorderController::class, 'getResource'])->name('get_resource');

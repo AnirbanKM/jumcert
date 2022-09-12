@@ -6,7 +6,7 @@
                 <a href="{{ route('home') }}" class="nav_link">
                     <img src="{{ asset('frontend/img/logo.png') }}" class="logo" alt="">
                 </a>
-                <form action="{{ route('search_channel') }}" method="POST">
+                <form action="{{ route('search_channel') }}" method="GET">
                     @csrf
                     <input type="text" name="name" placeholder="Search Channel">
                     <input type="submit" value="">

@@ -150,9 +150,9 @@ class ChannelController extends Controller
         }
     }
 
-    public function search_channel(Request $r)
+    public function search_channel_result(Request $r)
     {
-        $searchTerm = $r->name;
+        $searchTerm = $r->cname;
 
         $obj = Channel::where('name', 'LIKE', "%{$searchTerm}%")
             ->orWhere('slug', 'LIKE', "%{$searchTerm}%")->get();

@@ -33,6 +33,7 @@ class PrivateStream extends Model
 
     public function stream()
     {
-        return $this->belongsTo(LiveStream::class, 'stream_id', 'id');
+        return $this->belongsTo(LiveStream::class, 'stream_id', 'id')
+            ->where('status', '!=', 'Completed');
     }
 }
