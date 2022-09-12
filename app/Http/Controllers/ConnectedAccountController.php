@@ -23,15 +23,24 @@ class ConnectedAccountController extends Controller
             ->where('video_uploads.user_id', $user_id)
             ->paginate(2);
 
-        // return $stripe->accounts->retrieve(
-        //     'acct_1Lh7Mg4NkbOYggSl',
-        // );
+        if ($account != null) {
+            $account_id = $account->connected_account_id;
 
+            $stripe_resp = $stripe->accounts->retrieve(
+                $account_id
+            );
+
+            $routing_number = $stripe_resp->external_accounts->data[0]->routing_number;
+        } else {
+            $account_id = '';
+            $routing_number = '';
+        }
 
         return view('frontend.pages.connectaccount.index', [
             'owner_videos' => $owner_videos,
             'account' => $account,
-            'account_info' => $account_info
+            'account_info' => $account_info,
+            'routing_number' => $routing_number
         ]);
     }
 

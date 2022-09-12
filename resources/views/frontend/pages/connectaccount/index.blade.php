@@ -264,11 +264,13 @@
                                         <h2>Please enter your bank accout info</h2>
                                     </div>
 
-                                    <div class="alert alert-danger alert-dismissible">
-                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                        <strong>Alert!</strong>
-                                        Add your bank account no & routing no
-                                    </div>
+                                    @if ($routing_number == null)
+                                        <div class="alert alert-danger alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                            <strong>Alert!</strong>
+                                            Add your bank account no & routing no
+                                        </div>
+                                    @endif
 
                                     <form action="{{ route('add_bank_account') }}" method="POST">
 

@@ -121,6 +121,9 @@ class ConnectedAccountInfoController extends Controller
                     'tos_acceptance[ip]' => '8.8.8.8'
                 ]
             );
+
+            return $res;
+
             return redirect()->route('connected_account')->with('success', 'Account Created successfully');
         } catch (\Throwable $th) {
             return redirect()->route('connected_account')->with('error', 'Something went wrong');
