@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Frontend\VideoUpload;
 use App\Models\ConnectedAccount;
+use App\Models\ConnectedAccountInfo;
 use Illuminate\Http\Request;
 
 class ConnectedAccountController extends Controller
@@ -12,15 +13,25 @@ class ConnectedAccountController extends Controller
     {
         $user_id = auth()->user()->id;
 
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+
         $account = ConnectedAccount::where('user_id', $user_id)->first();
+
+        $account_info = ConnectedAccountInfo::where('user_id', $user_id)->first();
 
         $owner_videos = VideoUpload::join('private_videos', 'video_uploads.id', '=', 'private_videos.video_id')
             ->where('video_uploads.user_id', $user_id)
             ->paginate(2);
 
+        // return $stripe->accounts->retrieve(
+        //     'acct_1Lh7Mg4NkbOYggSl',
+        // );
+
+
         return view('frontend.pages.connectaccount.index', [
+            'owner_videos' => $owner_videos,
             'account' => $account,
-            'owner_videos' => $owner_videos
+            'account_info' => $account_info
         ]);
     }
 
@@ -41,7 +52,6 @@ class ConnectedAccountController extends Controller
                 'tos_acceptance[date]' => strtotime("now"),
                 'tos_acceptance[ip]' => '8.8.8.8'
             ]);
-
 
             $obj = new ConnectedAccount();
             $obj->user_id = auth()->user()->id;

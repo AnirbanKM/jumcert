@@ -70,6 +70,11 @@
                                             Account ID: {{ $account->connected_account_id }}
                                         </h1>
                                     @else
+                                        <div class="alert alert-danger alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                            <strong>Alert!</strong>
+                                            You need to create your connected account.
+                                        </div>
                                         <form action="{{ route('stripe_create_account') }}" method="post">
                                             @csrf
                                             <input type="submit" class="btn btn-primary" value="Create Your Account" />
@@ -84,6 +89,14 @@
                                     <div class="heading">
                                         <h2>Update your connected account with correct info</h2>
                                     </div>
+
+                                    @if ($account_info == null)
+                                        <div class="alert alert-danger alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                            <strong>Alert!</strong>
+                                            Add your all information and update your account
+                                        </div>
+                                    @endif
 
                                     <form action="{{ route('update_connected_account') }}" method="POST">
 
@@ -251,6 +264,12 @@
                                         <h2>Please enter your bank accout info</h2>
                                     </div>
 
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                        <strong>Alert!</strong>
+                                        Add your bank account no & routing no
+                                    </div>
+
                                     <form action="{{ route('add_bank_account') }}" method="POST">
 
                                         @csrf
@@ -275,7 +294,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="account_number">Enter Routing Number</label>
+                                            <label for="account_number">Enter Account Number</label>
                                             <input type="account_number" placeholder="Business account number"
                                                 class="form-control" value="000123456789" name="account_number"
                                                 id="account_number">
