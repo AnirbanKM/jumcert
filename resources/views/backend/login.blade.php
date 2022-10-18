@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<style>
+    .bg-login-image {
+        background: url(https://jumcert.com//jumcert.svg) !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+    }
+</style>
+
 <head>
 
     @include('backend.inc.header')

@@ -37,7 +37,11 @@
                                 <p>${{ $item->user_commission }}</p>
                             </td>
                             <td>
-                                <p>{{ $item->channelOwner->name }}</p>
+                                <p>
+                                    @isset($item->channelOwner)
+                                        {{ $item->channelOwner->name }}
+                                    @endisset
+                                </p>
                             </td>
                             <td>
                                 <p>{{ $item->buyer->name }}</p>

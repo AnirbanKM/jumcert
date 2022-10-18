@@ -28,13 +28,14 @@
                             @endif
                         </h1>
 
-                        <h2 class="text-uppercase">
-                            @if (Auth::user()->user_role == 1 || Auth::user()->user_role == 2)
-                                You are plan validity is 28 days
-                            @else
-                                You are cuurently using free plan please upgrade your plan
-                            @endif
-                        </h2>
+                        @if (Auth::user()->user_role == 1 || Auth::user()->user_role == 2)
+                            <h2 class="text-uppercase">
+                                You plan validity till : {{ $plan_end_date }}
+                            </h2>
+                            <h2>{{ $total_days }} Days left!!!</h2>
+                        @else
+                            <h3>You are currently using free plan please upgrade your plan</h3>
+                        @endif
                     </div>
 
                 </div>

@@ -37,6 +37,7 @@ class AdminCommissionController extends Controller
     public function viewAllCommission()
     {
         $commissions = Wallet::with('channelOwner', 'buyer')->get();
+        // return $commissions;
         return view('backend.pages.commission.view_all_commission', ['commissions' => $commissions]);
     }
 }

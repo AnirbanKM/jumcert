@@ -45,12 +45,11 @@
                                 <p> {{ $stream->description }} </p>
                             </div>
                             <div class="col-lg-12">
-                                <form action="{{ route('public_stream') }}" method="POST">
+                                <form action="{{ route('audience_join_stream') }}" method="POST">
                                     @csrf
-                                    <input type="hidden" name="streamId" value="{{ $stream->id }}">
+                                    <input type="hidden" name="streamId" value="{{ $stream->meetingId }}">
                                     <input type="submit" class="join" value="Join stream">
                                 </form>
-
                             </div>
                         </div>
                     </div>
