@@ -28,6 +28,8 @@ class VideosController extends Controller
                 ->with('playListInfo', 'channel')
                 ->orderBy('id', 'desc')->get();
 
+            // return $liveStreams;
+
             return view('frontend.pages.videoupload.videos', [
                 'videos' => $videos,
                 'playlists' => $playlists,

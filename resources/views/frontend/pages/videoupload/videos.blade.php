@@ -268,7 +268,11 @@
 
                                                                 {{-- Go Live button --}}
                                                                 <td>
-                                                                    @if (strtotime($item->streamDateTime) > strtotime('now'))
+                                                                    @php
+                                                                        $datework = \Carbon\Carbon::parse($item->streamDateTime);
+                                                                    @endphp
+
+                                                                    @if ($datework->isToday())
                                                                         <form action="{{ route('host_join_stream') }}"
                                                                             method="post">
                                                                             @csrf

@@ -20,90 +20,96 @@ class LiveStreamController extends Controller
         $price = $r->price;
         $stream_type = $r->stream_type;
 
-        // stream thumbnail
-        $thumbnail =  $r->file('thumbnail');
-
-        if ($r->stream_type == "Private") {
-            $this->validate($r, [
-                'price' => 'required'
-            ]);
+        if (Carbon::parse($streaming_dateTime) < Carbon::now()) {
+            return redirect()->route('videos')->with('error', 'Please select valid date!!!');
         } else {
-            $price = 0;
-        }
+            // stream thumbnail
+            $thumbnail =  $r->file('thumbnail');
 
-        $this->validate($r, [
-            'streamDateTime' => 'required',
-            'streaming_topic' => 'required|unique:live_streams,topic',
-            'streaming_playlist' => 'required',
-            'streaming_channel' => 'required',
-            'streaming_description' => 'required',
-            'stream_type' => 'required'
-        ]);
-
-        if ($r->hasFile('thumbnail')) {
-            $allowedImageExtension = ['jpg', 'png', 'jpeg', 'webp'];
-            $extension = $thumbnail->getClientOriginalExtension();
-
-            $checkImage = in_array($extension, $allowedImageExtension);
-
-            if ($checkImage == 1) {
-                $file = $r->file('thumbnail');
-                $thumbnailName = time() . $file->getClientOriginalName();
-
-                $path = $file->storeAs('jumcert', $thumbnailName, 's3'); // Thumbnail store in Amazon S3
-                $thumbnailLink = "https://jumcertstorage.s3.us-east-1.amazonaws.com/" . $path;
+            if ($r->stream_type == "Private") {
+                $this->validate($r, [
+                    'price' => 'required'
+                ]);
             } else {
-                session()->flash('error', 'Please select a valid image format !!!');
-                return redirect()->back()->with('streamErr', 'active show');
+                $price = 0;
             }
-        }
 
-        try {
-            $api_key = env('WHEREBY_TOKEN');
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, 'https://api.whereby.dev/v1/meetings');
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt(
-                $ch,
-                CURLOPT_POSTFIELDS,
-                '{
+            $this->validate($r, [
+                'streamDateTime' => 'required',
+                'streaming_topic' => 'required|unique:live_streams,topic',
+                'streaming_playlist' => 'required',
+                'streaming_channel' => 'required',
+                'streaming_description' => 'required',
+                'stream_type' => 'required'
+            ]);
+
+            if ($r->hasFile('thumbnail')) {
+                $allowedImageExtension = ['jpg', 'png', 'jpeg', 'webp'];
+                $extension = $thumbnail->getClientOriginalExtension();
+
+                $checkImage = in_array($extension, $allowedImageExtension);
+
+                if ($checkImage == 1) {
+                    $file = $r->file('thumbnail');
+                    $thumbnailName = time() . $file->getClientOriginalName();
+
+                    $path = $file->storeAs('jumcert', $thumbnailName, 's3'); // Thumbnail store in Amazon S3
+                    $thumbnailLink = "https://jumcertstorage.s3.us-east-1.amazonaws.com/" . $path;
+                } else {
+                    session()->flash('error', 'Please select a valid image format !!!');
+                    return redirect()->back()->with('streamErr', 'active show');
+                }
+            } else {
+                $thumbnailLink = "https://jumcert.com/user.png";
+            }
+
+            try {
+                $api_key = env('WHEREBY_TOKEN');
+                $ch = curl_init();
+                curl_setopt($ch, CURLOPT_URL, 'https://api.whereby.dev/v1/meetings');
+                curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                curl_setopt($ch, CURLOPT_POST, 1);
+                curl_setopt(
+                    $ch,
+                    CURLOPT_POSTFIELDS,
+                    '{
             "endDate": "2099-02-18T14:23:00.000Z",
             "fields": ["hostRoomUrl"]}'
-            );
+                );
 
-            $headers = [
-                'Authorization: Bearer ' . $api_key,
-                'Content-Type: application/json'
-            ];
+                $headers = [
+                    'Authorization: Bearer ' . $api_key,
+                    'Content-Type: application/json'
+                ];
 
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            $response = curl_exec($ch);
-            $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            curl_close($ch);
+                curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+                $response = curl_exec($ch);
+                $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                curl_close($ch);
 
-            $data = json_decode($response);
+                $data = json_decode($response);
 
-            $obj = new LiveStream();
-            $obj->streamDateTime = $streaming_dateTime;
-            $obj->topic = $streaming_topic;
-            $obj->playlist_id = $streaming_playlist;
-            $obj->channel_id = $streaming_channel;
-            $obj->description =  $streaming_description;
-            $obj->user_id = auth()->user()->id;
-            $obj->role = 'host';
-            $obj->price = $price;
-            $obj->stream_type = $stream_type;
-            $obj->thumbnail = $thumbnailLink;
-            $obj->roomName = $data->roomName;
-            $obj->meetingId = $data->meetingId;
-            $obj->hostRoomUrl = $data->hostRoomUrl;
-            $obj->audienceRoomUrl = $data->roomUrl;
-            $obj->save();
+                $obj = new LiveStream();
+                $obj->streamDateTime = $streaming_dateTime;
+                $obj->topic = $streaming_topic;
+                $obj->playlist_id = $streaming_playlist;
+                $obj->channel_id = $streaming_channel;
+                $obj->description =  $streaming_description;
+                $obj->user_id = auth()->user()->id;
+                $obj->role = 'host';
+                $obj->price = $price;
+                $obj->stream_type = $stream_type;
+                $obj->thumbnail = $thumbnailLink;
+                $obj->roomName = $data->roomName;
+                $obj->meetingId = $data->meetingId;
+                $obj->hostRoomUrl = $data->hostRoomUrl;
+                $obj->audienceRoomUrl = $data->roomUrl;
+                $obj->save();
 
-            return redirect()->route('videos')->with('success', 'Live stream added successfully');
-        } catch (\Throwable $th) {
-            dd($th);
+                return redirect()->route('videos')->with('success', 'Live stream added successfully');
+            } catch (\Throwable $th) {
+                dd($th);
+            }
         }
     }
 }

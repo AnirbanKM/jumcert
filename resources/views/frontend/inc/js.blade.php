@@ -17,17 +17,6 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 
 
-
-<!-- Mobile Nav Script -->
-<script>
-    // $(document).ready(function() {
-    //     $('#navigation nav').slimNav_sk78();
-    //     $('#nav-icon0').click(function() {
-    //         $(this).toggleClass('open');
-    //     });
-    // });
-</script>
-
 <script>
     $(document).ready(function() {
         //accordian
