@@ -1,12 +1,14 @@
 <div class="right-works-section2 row">
     <div class="col-md-12">
+
         <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/9xwazD5SyVg" frameborder="0"
-                allowfullscreen title="YouTube video player">
-            </iframe>
+            <video controls muted>
+                <source src="{{ asset('intro.mp4') }}" type="video/mp4">
+            </video>
         </div>
 
-        <div class="video_info">
+
+        <div class="video_info d-none">
             <h3 class="live">
                 <img src="{{ asset('frontend/img/sidebar/g2.png') }}" alt="">
                 <span>Ralph Edwards</span>

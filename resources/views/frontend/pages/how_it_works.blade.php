@@ -21,8 +21,8 @@
                                     </div>
                                     <div class="text">
                                         <h6>Register</h6>
-                                        <p>Keep access to your entertainment content while roaming the world.Pick from
-                                            thousands.</p>
+                                        <p>Register by using your email & create your personal password After registering,
+                                            log back in with the credentials created</p>
                                     </div>
                                 </li>
 
@@ -31,9 +31,9 @@
                                         <i class="fas fa-film"></i>
                                     </div>
                                     <div class="text">
-                                        <h6>Upload Videos</h6>
-                                        <p>Keep access to your entertainment content while roaming the world.Pick from
-                                            thousands.</p>
+                                        <h6>Profile Creation</h6>
+                                        <p>Complete your profile account, choose either the free subscription plan or Pro
+                                            Paid Subscription</p>
                                     </div>
                                 </li>
 
@@ -42,9 +42,51 @@
                                         <i class="fas fa-compass"></i>
                                     </div>
                                     <div class="text">
-                                        <h6>Explore Jumcert</h6>
-                                        <p>Keep access to your entertainment content while roaming the world.Pick from
-                                            thousands.</p>
+                                        <h6>Subscription Plan</h6>
+                                        <p>Once you have selected your plan subscription you may set up a stripe account
+                                            (This step is only for PRO MEMBERS ONLY) If you register for a Free plan
+                                            subscription you will only have access to Jumcert library to purchase content.
+                                        </p>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="image">
+                                        <i class="fas fa-compass"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h6>Create Channel</h6>
+                                        <p>Create Channel (PRO MEMBERS ONLY)</p>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="image">
+                                        <i class="fas fa-compass"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h6>Live Videos</h6>
+                                        <p>Create Live Videos or Schedule Pre Live Videos (PRO MEMBERS ONLY)</p>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="image">
+                                        <i class="fas fa-compass"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h6>Public or Private mode</h6>
+                                        <p>Select if your content will stream Public or Private mode (PRO MEMBERS ONLY)</p>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="image">
+                                        <i class="fas fa-compass"></i>
+                                    </div>
+                                    <div class="text">
+                                        <h6>Earnings</h6>
+                                        <p>Review & receive earnings for your content (PRO MEMBERS ONLY)</p>
                                     </div>
                                 </li>
 
@@ -120,5 +162,5 @@
         </div>
     </section>
 
-    @include('frontend.inc.startsec')
+    {{-- @include('frontend.inc.startsec') --}}
 @endsection
